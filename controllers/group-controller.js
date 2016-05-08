@@ -22,9 +22,10 @@ exports.create = function(req, res){
 exports.update = function(req, res){
 	console.log('Info : ' + req.body.name + ' ' + req.body.member_id);
 	Group.update(
-		{name: "poppin"},
-		{$addToSet: {members:"emphy"}}
-	)
+		{name: req.body.name},
+		{$addToSet: {members: req.body.member_id}}
+		
+	);
 	
 	res.end();
 }
