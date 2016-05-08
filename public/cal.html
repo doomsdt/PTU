@@ -31,7 +31,7 @@
 		  xfbml      : true,  // parse social plugins on this page
 		  version    : 'v2.2' // use version 2.2
 		});
-		
+	};
 		
 		// Load the SDK asynchronously
 	(function(d, s, id) {
@@ -42,12 +42,11 @@
 	  fjs.parentNode.insertBefore(js, fjs);
 	}(document, 'script', 'facebook-jssdk'));
 
-		FB.getLoginStatus(function(response) {
-		  statusChangeCallback(response);
-		});
+	FB.getLoginStatus(function(response) {
+	  statusChangeCallback(response);
+	});
 
-	};
-	
+		
 	FB.api('/me?fields=public_profiles', function(response) {
 	    $('#newGroupName').val(response.name);
 	 });
