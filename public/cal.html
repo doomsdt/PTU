@@ -41,6 +41,9 @@ window.fbAsyncInit = function() {
 		console.log('Hello, ' + response.name);
 	    $('#newGroupName').val(response.name);
 	});
+	FB.Event.subscribe('auth.login', function(response) {
+	    document.location.reload();
+	});
 };
 (function(d, s, id){
     var js, fjs = d.getElementsByTagName(s)[0];
