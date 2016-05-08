@@ -55,6 +55,7 @@ function resetCalendar(year,month,startDay){
 
 function setEvent(){
 	UpdateDate();
+	setGroupAdd();
 
 	$('#addSsubmit').unbind('click');
 	$('#addSsubmit').bind('click', function(){
@@ -118,4 +119,20 @@ function UpdateDate(){
 		}
 	});
 
+}
+
+
+function setGroupAdd(){
+	$('#newGroupSubmit').unbind('click');
+	$('#newGroupSubmit').bind('click',function(){
+		console.log('clicked');
+		$.ajax({
+			type: 'POST',
+			url: '/createGroup',
+			data: "name=" + $('#newGroupName').val() + "&leader=" + $('#newGroupName').attr('name'),
+			success: function(){
+				console.log('group has created successfully');
+			}
+		});
+	});
 }
