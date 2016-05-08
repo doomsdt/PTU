@@ -33,6 +33,7 @@
 		});
 		
 		FB.api('/me?fields=public_profiles', function(response) {
+			console.log(JSON.stringify(response));
 		    $('#newGroupName').val(response.name);
 		 });
 		
@@ -46,10 +47,6 @@
 	  js.src = "//connect.facebook.net/en_US/sdk.js";
 	  fjs.parentNode.insertBefore(js, fjs);
 	}(document, 'script', 'facebook-jssdk'));
-
-		
-	
-
 
 
 </script>
