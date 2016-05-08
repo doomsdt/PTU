@@ -23,6 +23,21 @@ function initCal(y,m,start_day){
 
 }
 
+function initGroups(){
+	$.ajax({
+		type: 'POST',
+		url: '/listGroup',
+		success: function(data){
+			var _tmp = JSON.parse(data);
+			$('#groupList div').remove();
+			
+			for(var key in _tmp){
+				console.log(_tmp[key]);
+			}
+		}
+	});
+}
+
 function setTitle(year,month,startDay){
 	var endDay = new Date(startDay.getFullYear(),startDay.getMonth(),startDay.getDate()+6);
 
@@ -50,6 +65,7 @@ function setTitle(year,month,startDay){
 function resetCalendar(year,month,startDay){
 	setTitle(year,month,startDay);
 	initCal(year,month,startDay);
+	initGroups();
 	setEvent();
 }
 
