@@ -20,7 +20,7 @@ exports.create = function(req, res){
 }
 
 exports.update = function(req, res){
-	
+	console.log('Info : ' + req.body.name + ' ' + req.body.member_id);
 	Group.update(
 		{name: req.body.name},
 		{$addToSet: {members:req.body.member_id}}
