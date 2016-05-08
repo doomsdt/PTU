@@ -10,7 +10,7 @@ exports.list = function(req, res){
 }
 
 exports.create = function(req, res){
-	
+	console.log('Info : ' + req.body.name + ' ' + req.body.leader);
 	new Group({
 		name: req.body.name,
 		leader: req.body.leader
