@@ -144,7 +144,7 @@ function setGroupAdd(){
 			url: '/updateGroup',
 			data: "name=" + $('#newGroupName').val() + "&member_id=" + $('#newMemberName').val(),
 			success: function(){
-				console.log(data);
+				console.log("name=" + $('#newGroupName').val() + "&member_id=" + $('#newMemberName').val());
 			}
 		});
 	});
