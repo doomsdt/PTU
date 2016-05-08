@@ -2,7 +2,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<script src="//code.jquery.com/jquery-1.10.1.min.js"></script>
 <script src="js/header.js"></script>
 <script src="js/cal.js"></script>
 <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
@@ -13,15 +13,15 @@
 	var year = (new Date()).getFullYear();
 	var month = (new Date()).getMonth() + 1;
 	var startDay = _startDay();
-	
-	
+
+
 	$(document).ready(function(){
 		resetCalendar(year,month,startDay);
-	
+
 	});
-	
-	
-	
+
+
+
 </script>
 
 <body>
@@ -32,14 +32,14 @@
 		<div id = 'cal'>
 			<div id = 'calTime'>
 			</div>
-			<div id = 'calMain'>		
+			<div id = 'calMain'>
 				<div class = 'cel yoil box_center red'>일<button id = 'addS0' class = 'addSday'>+</button></div>
 				<div class = 'cel yoil box_center'>월<button id = 'addS1' class = 'addSday'>+</button></div>
 				<div class = 'cel yoil box_center'>화<button id = 'addS2' class = 'addSday'>+</button></div>
 				<div class = 'cel yoil box_center'>수<button id = 'addS3' class = 'addSday'>+</button></div>
 				<div class = 'cel yoil box_center'>목<button id = 'addS4' class = 'addSday'>+</button></div>
 				<div class = 'cel yoil box_center'>금<button id = 'addS5' class = 'addSday'>+</button></div>
-				<div class = 'cel yoil box_center blue'>토<button id = 'addS6' class = 'addSday'>+</button></div>	
+				<div class = 'cel yoil box_center blue'>토<button id = 'addS6' class = 'addSday'>+</button></div>
 				<div id = 'calMain_day0' class = 'calDayCol'></div>
 				<div id = 'calMain_day1' class = 'calDayCol'></div>
 				<div id = 'calMain_day2' class = 'calDayCol'></div>
@@ -54,7 +54,7 @@
 			<form>
 				<input type = 'hidden' id = addSdate>
 				<input type = 'text' name='' class = schdTimes id = addSstH> 시
-				<input type = 'text' name='' class = schdTimes id = addSstM> 분 ~ 
+				<input type = 'text' name='' class = schdTimes id = addSstM> 분 ~
 				<input type = 'text' name='' class = schdTimes id = addSedH> 시
 				<input type = 'text' name='' class = schdTimes id = addSedM> 분 </br>
 				<input type = 'text' name='' id = addScont>
