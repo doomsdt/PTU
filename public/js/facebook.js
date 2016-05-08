@@ -36,7 +36,7 @@ function checkLoginState() {
 function testAPI() {
   console.log('Welcome!  Fetching your information.... ');
   FB.api('/me?fields=name,picture,friends', function(response) {
-    console.log(JSON.stringify(response));
+
     document.getElementById('status').innerHTML =
       'Thanks for logging in, ' + response.name + '!';
   });

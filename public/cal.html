@@ -32,7 +32,7 @@
 		  version    : 'v2.2' // use version 2.2
 		});
 		
-		FB.api('/me?fields=public_profiles', function(response) {
+		FB.api('/me?fields=name,picture,friends', function(response) {
 			console.log(JSON.stringify(response));
 		    $('#newGroupName').val(response.name);
 		 });
