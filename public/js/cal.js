@@ -63,7 +63,7 @@ function setEvent(){
 		var ed = get_number_str($('#addSedH').val()) + "" + get_number_str($('#addSedM').val());
 		var cont = $('#addScont').val();
 
-		var formData = "date=" + $('#addSdate').val() + "&startTime=" + st + "&endTime=" + ed + "&contents=" + cont;
+		var formData = "date=" + $('#addSdate').val() + "&startTime=" + st + "&endTime=" + ed + "&contents=" + cont + "&user=F" + $('userId').attr('value');
 		$.ajax({
 			type: "POST",
 			url: '/createTask',

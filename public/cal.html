@@ -16,6 +16,8 @@
 	var year = (new Date()).getFullYear();
 	var month = (new Date()).getMonth() + 1;
 	var startDay = _startDay();
+	
+	var userId, userName, picUrl;
 
 
 	$(document).ready(function(){
@@ -43,8 +45,11 @@ window.fbAsyncInit = function() {
         if (response.status === 'connected') {
             
         	FB.api('/me?fields=name,picture,friends', function(response) {
-        		console.log('Hello, ' + response.name);
+        		console.log(JSON.stringify(response));
         	    $('#newGroupName').attr('name',response.name);
+        	    userId = response.id;
+        	    userName = response.name;
+        	    picUrl = response.picture.url;
         	});
              
         } else if (response.status === 'not_authorized') {
@@ -76,7 +81,9 @@ window.fbAsyncInit = function() {
 
 <div id="status">
 </div>
-
+<input type = 'hidden' id = 'userId' value = userId>
+<input type = 'hidden'  id = 'userName' value = userName>
+<input type = 'hidden'  id = 'picUrl' value = picUrl>
 
 	<div id = 'main'>
 		<div class = 'prevWeek box_center'></div>
