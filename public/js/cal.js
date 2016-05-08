@@ -142,26 +142,26 @@ function UpdateDate(){
 function setGroupAdd(){
 	$('#newGroupSubmit').unbind('click');
 	$('#newGroupSubmit').bind('click',function(){
-		console.log('clicked');
+
 		$.ajax({
 			type: 'POST',
 			url: '/createGroup',
 			data: "name=" + $('#newGroupName').val() + "&leader=" + $('#newGroupName').attr('name'),
 			success: function(){
-				console.log('group has created successfully');
+
 			}
 		});
 	});
 	
 	$('#newMemberSubmit').unbind('click');
 	$('#newMemberSubmit').bind('click',function(){
-		console.log('clicked');
+
 		$.ajax({
 			type: 'POST',
 			url: '/updateGroup',
 			data: "name=" + $('#newGroupName').val() + "&member_id=" + $('#newMemberName').val(),
 			success: function(){
-				console.log("name=" + $('#newGroupName').val() + "&member_id=" + $('#newMemberName').val());
+
 			}
 		});
 	});

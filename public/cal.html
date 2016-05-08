@@ -45,7 +45,6 @@ window.fbAsyncInit = function() {
         if (response.status === 'connected') {
             
         	FB.api('/me?fields=name,picture,friends', function(response) {
-        		console.log(JSON.stringify(response));
         	    $('#newGroupName').attr('name',response.name);
         	    $('#userId').attr('value',response.id);
         	    $('#userName').attr('value',response.name);
