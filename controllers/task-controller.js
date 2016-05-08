@@ -14,6 +14,7 @@ exports.create = function(req, res) {
 	
 	Task.find(function(err, tasks) {
 		new Task({
+			user: req.body.user,
 			date: req.body.date,
 			startTime:req.body.startTime,
 			endTime: req.body.endTime,
