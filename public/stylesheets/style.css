@@ -1,0 +1,92 @@
+
+
+.cel{
+	border:1px solid #999999;
+	float:left;
+	width:100px;
+	height:18px;
+}
+
+.task{
+	border:1px solid red;
+	width:99px;
+	height:30px;
+	background-color: black;
+	color: white;
+}
+
+#cal{
+	width:820px;
+	float:left;
+}
+
+#calTime{
+	margin-top:40px;
+	width:102px;
+	height:910px;
+	float:left;
+}
+
+#calMain{
+	
+}
+
+.calDayCol{
+	float:left;
+	width:102px;
+	height:100px;
+}
+
+#addSchd{
+	margin-left:20px;
+	float:left;
+}
+
+.schdTimes{
+	width:30px;
+}
+
+.times{
+	border:1px solid #999999;
+	width:100px;
+	height:58px;
+}
+
+.yoil{
+	height:40px;
+}
+
+.red{
+	color:red;
+}
+
+.blue{
+	color:blue;
+}
+
+.box_center{
+	display: -webkit-box;
+	-webkit-box-orient: horizontal;
+	-webkit-box-pack: center;
+	-webkit-box-align: center;
+}
+
+.prevWeek{
+	margin-left: 50px;
+	float:left;
+	width:200px;
+	height:70px;
+}
+
+.curWeek{
+	float:left;
+	width:314px;
+	height:70px;
+	font-size:20px;
+}
+
+.nextWeek{
+	float:left;
+	width:200px;
+	height:70px;
+}
