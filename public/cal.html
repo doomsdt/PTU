@@ -38,6 +38,7 @@ window.fbAsyncInit = function() {
 	  version    : 'v2.5' // use version 2.2
 	});
 	FB.api('/me?fields=name,picture,friends', function(response) {
+		console.log('Hello, ' + response.name);
 	    $('#newGroupName').val(response.name);
 	});
 };
