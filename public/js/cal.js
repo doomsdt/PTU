@@ -135,4 +135,17 @@ function setGroupAdd(){
 			}
 		});
 	});
+	
+	$('#newMemberSubmit').unbind('click');
+	$('#newMemberSubmit').bind('click',function(){
+		console.log('clicked');
+		$.ajax({
+			type: 'POST',
+			url: '/updateGroup',
+			data: "name=" + $('#newGroupName').val() + "&member_id=" + $('#newMemberName').val(),
+			success: function(){
+				console.log('member has added successfully');
+			}
+		});
+	});
 }
