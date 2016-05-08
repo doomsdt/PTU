@@ -32,7 +32,8 @@ function initGroups(){
 			$('#groupList div').remove();
 			
 			for(var key in _tmp){
-				console.log(_tmp[key]);
+				$('#groupList').append("<div class='glElement' id="+ _tmp[key]._id +"><p class='glLeader'>"+_tmp[key].leader
+						+"</p><p class='glName'>"+_tmp[key].name+"</p></div>");
 			}
 		}
 	});

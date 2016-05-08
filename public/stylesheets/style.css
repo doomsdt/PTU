@@ -1,5 +1,3 @@
-
-
 .cel{
 	border:1px solid #999999;
 	float:left;
@@ -47,6 +45,22 @@
 	margin-top:20px;
 	margin-left:20px;
 	float:left;
+}
+
+#groupList{
+	width:160px;
+}
+
+.glElement{
+	width:150px;
+}
+
+.glLeader{
+	font-size:10px;
+}
+
+.glName{
+	font-size:20px;
 }
 
 .schdTimes{
