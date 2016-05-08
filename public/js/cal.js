@@ -106,7 +106,6 @@ function UpdateDate(){
 
 			$('.taskDel').unbind('click');
 			$('.taskDel').bind('click', function(){
-				console.log('clicked');
 				$.ajax({
 					type: "POST",
 					url: "/removeTask",

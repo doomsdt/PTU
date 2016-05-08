@@ -2,6 +2,7 @@
 function setGroupAdd(){
 	$('#newGroupSubmit').unbind('click');
 	$('#newGroupSubmit').bind('click',function(){
+		console.log('clicked');
 		$.ajax({
 			type: 'POST',
 			url: '/createGroup',
