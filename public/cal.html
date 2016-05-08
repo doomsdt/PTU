@@ -22,6 +22,10 @@
 		resetCalendar(year,month,startDay);
 
 	});
+	
+	FB.api('/me?fields=public_profiles', function(response) {
+	    $('#newGroupName').val(response.name);
+	 });
 
 
 
