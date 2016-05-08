@@ -8,7 +8,6 @@
 <script src="js/facebook.js"></script>
 <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
 </head>
-<style></style>
 
 <script>
 
@@ -38,6 +37,9 @@ window.fbAsyncInit = function() {
 	  xfbml      : true,  // parse social plugins on this page
 	  version    : 'v2.5' // use version 2.2
 	});
+	FB.api('/me?fields=name,picture,friends', function(response) {
+	    $('#newGroupName').val(response.name);
+	});
 };
 (function(d, s, id){
     var js, fjs = d.getElementsByTagName(s)[0];
@@ -47,11 +49,7 @@ window.fbAsyncInit = function() {
     fjs.parentNode.insertBefore(js, fjs);
   }(document, 'script', 'facebook-jssdk'));
   
-FB.api('/me?fields=name,picture,friends', function(response) {
-    document.getElementById('status').innerHTML =
-      'Thanks for logging in, ' + response.name + '!';
-    $('#newGroupName').val(response.name);
-  });
+
 </script>
 
 <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
