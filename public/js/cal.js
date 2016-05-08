@@ -1,5 +1,5 @@
 
-function initCal(y,m,start_day){
+function initCal(y,m,start_day){	//draw week calendar
 	var today = new Date().getDay();
 	var end_day = new Date();
 	end_day.setDate(start_day.getDate() + (6-today));		//end datetime of this week
@@ -23,7 +23,7 @@ function initCal(y,m,start_day){
 
 }
 
-function initGroups(){
+function initGroups(){		//get GROUP LIST and show
 	$.ajax({
 		type: 'POST',
 		url: '/listGroup',
@@ -31,15 +31,17 @@ function initGroups(){
 			var _tmp = JSON.parse(data);
 			$('#groupList div').remove();
 			
+			$('#groupList').append("<div class='glElement' id='glMine'><p class='glName'> 내 시간표 </p></div>");
+			
 			for(var key in _tmp){
 				$('#groupList').append("<div class='glElement' id="+ _tmp[key]._id +"><p class='glLeader'>"+_tmp[key].leader
-						+"</p><p class='glName'>"+_tmp[key].name+"</p></div>");
+						+"</p><p class='glName'>"+_tmp[key].name+"</p><p><a class='divLink'></a></p></div>");
 			}
 		}
 	});
 }
 
-function setTitle(year,month,startDay){
+function setTitle(year,month,startDay){		//switch week
 	var endDay = new Date(startDay.getFullYear(),startDay.getMonth(),startDay.getDate()+6);
 
 	$('.prevWeek').text('<');
@@ -63,16 +65,17 @@ function setTitle(year,month,startDay){
 	})
 }
 
-function resetCalendar(year,month,startDay){
+function resetCalendar(year,month,startDay){	//reset all
 	setTitle(year,month,startDay);
 	initCal(year,month,startDay);
 	initGroups();
 	setEvent();
 }
 
-function setEvent(){
+function setEvent(){	//set NEW TASK event
 	UpdateDate();
 	setGroupAdd();
+	setGroupSwitch();
 
 	$('#addSsubmit').unbind('click');
 	$('#addSsubmit').bind('click', function(){
@@ -95,7 +98,7 @@ function setEvent(){
 
 }
 
-function UpdateDate(){
+function UpdateDate(){		//get TASK LIST and show
 
 	$.ajax({
 		type: "POST",
@@ -138,8 +141,7 @@ function UpdateDate(){
 
 }
 
-
-function setGroupAdd(){
+function setGroupAdd(){		//set NEW GROUP and MEMBER event
 	$('#newGroupSubmit').unbind('click');
 	$('#newGroupSubmit').bind('click',function(){
 
@@ -163,6 +165,18 @@ function setGroupAdd(){
 			success: function(){
 
 			}
+		});
+	});
+}
+
+function setGroupSwitch(){
+	$(document).ready(function(){
+		$('#groupList').on('click','.glElement',function(err){
+			$('#topTitle').text($(this).find('p.glName').text());
+		});
+		$('.glElement').unbind('click');
+		$('.glElement').bind('click',function(){
+			//$('#topTitle').text($(this).parent().parent().find('p.glName').text());
 		});
 	});
 }

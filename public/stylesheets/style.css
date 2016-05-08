@@ -13,6 +13,15 @@
 	color: white;
 }
 
+.myspan {
+	display: block;
+}
+
+#topTitle{
+	font-size:30px;
+	margin-left:300px;
+}
+
 #cal{
 	width:820px;
 	float:left;
@@ -47,20 +56,39 @@
 	float:left;
 }
 
-#groupList{
-	border:4px solid black;
+#groupList{	
 	width:160px;
 }
 
 .glElement{
+	border:4px solid black;
 	width:150px;
+	margin:10px;
+}
+
+.glElement:hover{
+	cursor: hand;
+	cursor: pointer;
+}
+
+a.divLink{
+
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	z-index: 10;
+	opacity: 0;
+	filter: alpha(opacity=0);
 }
 
 .glLeader{
+	margin:2px;
 	font-size:10px;
 }
 
 .glName{
+	text-align:center;
 	margin:auto;
 	font-size:20px;
 }
