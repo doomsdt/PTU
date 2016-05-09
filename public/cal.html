@@ -111,26 +111,37 @@ window.fbAsyncInit = function() {
 			</div>
 		</div>		
 	</div>
-	<div id = 'addSchd'>
-		<p id = 'schdDate'></p>
-		<form>
-			<input type = 'hidden' id = addSdate>
-			<input type = 'text' name='' class = schdTimes id = addSstH> 시
-			<input type = 'text' name='' class = schdTimes id = addSstM> 분 ~
-			<input type = 'text' name='' class = schdTimes id = addSedH> 시
-			<input type = 'text' name='' class = schdTimes id = addSedM> 분 </br>
-			<input type = 'text' name='' id = addScont>
-			<input type = 'button' id = addSsubmit value='등록'>
-		</form>
-	</div>
-	<div id = 'group'>
-		<input type = 'text' id = newGroupName>
-		<input type = 'button' id = newGroupSubmit value='그룹 추가'> </br>
-		<input type = 'text' id = newMemberName>
-		<input type = 'button' id = newMemberSubmit value='멤버 추가'> </br>
-		<div id = 'groupList'>
-		</div>		
-	</div>
+	<aside>
+		<div id = 'tmp'>
+		<select id='tmpUserName'>
+			<option>이 름</option>
+		</select>
+		<input type = 'text' id = 'tmpNewUser' >
+		<input type = 'button' id = 'tmpNewUserSubmit' value = '등록'>
+		<input type = 'button' id = 'tmpTmp' value = '등록'>
+	
+		</div>
+		<div id = 'addSchd'>
+			<p id = 'schdDate'></p>
+			<form>
+				<input type = 'hidden' id = addSdate>
+				<input type = 'text' name='' class = schdTimes id = addSstH> 시
+				<input type = 'text' name='' class = schdTimes id = addSstM> 분 ~
+				<input type = 'text' name='' class = schdTimes id = addSedH> 시
+				<input type = 'text' name='' class = schdTimes id = addSedM> 분 </br>
+				<input type = 'text' name='' id = addScont>
+				<input type = 'button' id = addSsubmit value='등록'>
+			</form>
+		</div>
+		<div id = 'group'>
+			<input type = 'text' id = newGroupName>
+			<input type = 'button' id = newGroupSubmit value='그룹 추가'> </br>
+			<input type = 'text' id = newMemberName>
+			<input type = 'button' id = newMemberSubmit value='멤버 추가'> </br>
+			<div id = 'groupList'>
+			</div>		
+		</div>
+	</aside>
 </body>
 
 </html>

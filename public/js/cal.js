@@ -74,6 +74,7 @@ function resetCalendar(year,month,startDay){	//reset all
 
 function setEvent(){	//set NEW TASK event
 	UpdateDate();
+	UpdateUser();
 	setGroupAdd();
 	setGroupSwitch();
 
@@ -95,6 +96,21 @@ function setEvent(){	//set NEW TASK event
 		$('.schdTimes').val(''); $('#addScont').val('');
 	});
 
+	// Temporal
+	$('#tmpNewUserSubmit').on('click',function(){
+		$.ajax({
+			type : 'POST',
+			url : '/createMember',
+			data : 'name=' + $('#tmpNewUser').val(),
+			success : function(){
+				UpdateUser();
+			}
+		});
+	});
+	
+	$('#tmpTmp').on('click',function(){
+		$(this).val($('#tmpUserName').val());
+	})
 
 }
 
@@ -141,6 +157,24 @@ function UpdateDate(){		//get TASK LIST and show
 
 }
 
+function UpdateUser(){
+	var _tmp;
+	$.ajax({
+		type : 'POST',
+		url : '/listMember',
+		success : function(data){
+			_tmp = JSON.parse(data);
+			for(var key in _tmp){
+				$('#tmpUserName').append($('<option>', {
+					value : _tmp[key].name,
+					text : _tmp[key].name
+				}));
+			}
+		}
+	});
+	
+}
+
 function setGroupAdd(){		//set NEW GROUP and MEMBER event
 	$('#newGroupSubmit').unbind('click');
 	$('#newGroupSubmit').bind('click',function(){
@@ -173,10 +207,6 @@ function setGroupSwitch(){
 	$(document).ready(function(){
 		$('#groupList').on('click','.glElement',function(err){
 			$('#topTitle').text($(this).find('p.glName').text());
-		});
-		$('.glElement').unbind('click');
-		$('.glElement').bind('click',function(){
-			//$('#topTitle').text($(this).parent().parent().find('p.glName').text());
 		});
 	});
 }

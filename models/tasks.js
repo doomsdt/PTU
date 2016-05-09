@@ -3,6 +3,7 @@ var mongoose = require('mongoose'),
 
 var taskSchema = new Schema({
 	user: String,
+	group: String,
 	date: String,
 	startTime: String,
 	endTime: String,
