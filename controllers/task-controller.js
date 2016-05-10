@@ -1,13 +1,19 @@
 var Task = require('../models/tasks.js');
 
 exports.list = function(req, res) {
-	
 	var tmp;
-	Task.find({date : {$gte:req.body.startDate, $lte:req.body.endDate}}).sort({date: 1, startTime: 1}).exec(function(err,tasks){
-
-		tmp = JSON.stringify(tasks);
-		res.send(tmp);
-	});
+	if(req.body.userId){
+		Task.find({date : {$gte:req.body.startDate, $lte:req.body.endDate}, user:req.body.userId}).sort({date: 1, startTime: 1}).exec(function(err,tasks){
+	
+			tmp = JSON.stringify(tasks);
+			res.send(tmp);
+		});
+	} else if(req.body.members){
+		Task.find({date : {$gte:req.body.startDate, $lte:req.body.endDate}, user : {$in : JSON.parse(req.body.members)}}).sort({date: 1, startTime: 1}).exec(function(err,tasks){
+			tmp = JSON.stringify(tasks);
+			res.send(tmp);
+		});
+	}
 };
 
 exports.create = function(req, res) {

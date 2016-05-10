@@ -4,7 +4,8 @@ var mongoose = require('mongoose'),
 var memberSchema = new Schema({
 	uid: String,
 	pic: String,
-	name: String
+	name: String,
+	groups: [{type: Schema.Types.ObjectId, ref: 'Group'}]
 });
 
 module.exports = mongoose.model('Member', memberSchema);

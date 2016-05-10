@@ -31,12 +31,45 @@ function initGroups(){		//get GROUP LIST and show
 			var _tmp = JSON.parse(data);
 			$('#groupList div').remove();
 			
-			$('#groupList').append("<div class='glElement' id='glMine'><p class='glName'> 내 시간표 </p></div>");
+			$('#groupList').append("<div class='glBox'><div class='glElement' id='glMine'><p class='glName'> 내 시간표 </p></div></div></br>");
 			
 			for(var key in _tmp){
-				$('#groupList').append("<div class='glElement' id="+ _tmp[key]._id +"><p class='glLeader'>"+_tmp[key].leader
-						+"</p><p class='glName'>"+_tmp[key].name+"</p><p><a class='divLink'></a></p></div>");
+				var leader;
+				$.ajax({
+					type:'POST',
+					url: '/listMember',
+					data: 'id=' + _tmp[key].leader,
+					async: false,
+					success: function(ret){
+						leader = JSON.parse(ret)[0].name;
+						
+					}
+				});
+				$('#groupList').append("<div class='glBox'><div class='glElement' id="+ _tmp[key]._id +"><p class='glLeader'>"+leader
+						+"</p><p class='glName'>"+_tmp[key].name+"</p><p><a class='divLink'></a></p></div><input type='button' value='+' class='glJoin'></div></br>");
+
 			}
+		
+			$('.glElement').not('#glMine').on('click', function(err){
+				$('#topTitle').text($(this).find('p.glName').text());
+				UpdateDate(null,$(this).attr('id'));
+			});
+			
+			$('#glMine').on('click', function(err){
+				$('#topTitle').text($(this).find('p.glName').text());
+				UpdateDate($("#tmpUserName option[value="+$('#tmpUserName').val()+"]").attr('id'),null);
+			});
+
+			$('.glJoin').on('click',function(){
+				$.ajax({
+					type: 'POST',
+					url: '/updateGroup',
+					data: "id=" + $(this).siblings(".glElement").attr('id') + "&member_id=" + $("#tmpUserName option[value="+$('#tmpUserName').val()+"]").attr('id'),
+					success: function(){
+
+					}
+				});
+			});
 		}
 	});
 }
@@ -73,10 +106,9 @@ function resetCalendar(year,month,startDay){	//reset all
 }
 
 function setEvent(){	//set NEW TASK event
-	UpdateDate();
+	//UpdateDate();
 	UpdateUser();
 	setGroupAdd();
-	setGroupSwitch();
 
 	$('#addSsubmit').unbind('click');
 	$('#addSsubmit').bind('click', function(){
@@ -84,13 +116,14 @@ function setEvent(){	//set NEW TASK event
 		var ed = get_number_str($('#addSedH').val()) + "" + get_number_str($('#addSedM').val());
 		var cont = $('#addScont').val();
 
-		var formData = "date=" + $('#addSdate').val() + "&startTime=" + st + "&endTime=" + ed + "&contents=" + cont + "&user=F" + $('#userId').attr('value');
+		var formData = "date=" + $('#addSdate').val() + "&startTime=" + st + "&endTime=" + ed + "&contents=" + cont + 
+						"&user=" + $("#tmpUserName option[value="+$('#tmpUserName').val()+"]").attr('id');
 		$.ajax({
 			type: "POST",
 			url: '/createTask',
 			data: formData,
 			success: function(){
-				UpdateDate();
+				//UpdateDate();
 			}
 		});
 		$('.schdTimes').val(''); $('#addScont').val('');
@@ -109,51 +142,71 @@ function setEvent(){	//set NEW TASK event
 	});
 	
 	$('#tmpTmp').on('click',function(){
-		$(this).val($('#tmpUserName').val());
+		$(this).val($("#tmpUserName option[value="+$('#tmpUserName').val()+"]").attr('id'));
 	})
 
 }
 
-function UpdateDate(){		//get TASK LIST and show
+function UpdateDate(userId,groupId){		//get TASK LIST and show
 
-	$.ajax({
-		type: "POST",
-		url: '/list',
-		data: "startDate=" + $('#addS0').val() + "&endDate=" + $('#addS6').val(),
-		success: function(data) {
-			var bef = 540;
-			var befDate, curDate;
-			var _tmp = JSON.parse(data);
-			$('.calDayCol div').remove();
-
-			for(var key in _tmp){
-				curDate = _tmp[key].date;
-				if(curDate != befDate) bef = 540;
-				var st = Number(_tmp[key].startTime.slice(0,2))*60 + Number(_tmp[key].startTime.slice(2,4));
-				var ed = Number(_tmp[key].endTime.slice(0,2))*60 + Number(_tmp[key].endTime.slice(2,4));
-				var date = new Date(_tmp[key].date.slice(0,4) + '-' + _tmp[key].date.slice(4,6) + '-' + _tmp[key].date.slice(6,8));
-				if(_tmp[key].date>=$('#addS0').val() && _tmp[key].date<=$('#addS6').val()){
-					var t = $("<div class='task box_center' id=" + _tmp[key].date +'' + _tmp[key].startTime + "><input type='button' value='X' class='taskDel'>" + _tmp[key].contents + '</div>');
-					$('#calMain_day'+date.getDay()).append(t);
-					$(t).css("margin-top", st-bef+"px").css("height", ed-st-2+"px");
-					bef = ed;
-				}
-				befDate = _tmp[key].date;
-			}
-
-			$('.taskDel').unbind('click');
-			$('.taskDel').bind('click', function(){
+	if(groupId){
+		$.ajax({
+			type: "POST",
+			url: '/listGroupMembers',
+			data: "groupId=" + groupId,
+			success: function(ret){
 				$.ajax({
 					type: "POST",
-					url: "/removeTask",
-					data: "contents=" + $(this).parent().text() + "&date=" + $(this).parent().attr('id').slice(0,8) + "&startTime=" + $(this).parent().attr('id').slice(8,12),
-					success: function(){
+					url: '/list',
+					data: "startDate=" + $('#addS0').val() + "&endDate=" + $('#addS6').val() +"&members=" + 
+					JSON.stringify(JSON.parse(ret)[0].members),
+					success: function(retu){
+						console.log(retu);
 					}
 				});
-				$(this).parent().remove();
-			});
-		}
-	});
+			}
+		});
+	}
+	else{
+		$.ajax({
+			type: "POST",
+			url: '/list',
+			data: "startDate=" + $('#addS0').val() + "&endDate=" + $('#addS6').val() + "&userId=" + userId,
+			success: function(data) {
+				var bef = 540;
+				var befDate, curDate;
+				var _tmp = JSON.parse(data);
+				$('.calDayCol div').remove();
+	
+				for(var key in _tmp){
+					curDate = _tmp[key].date;
+					if(curDate != befDate) bef = 540;
+					var st = Number(_tmp[key].startTime.slice(0,2))*60 + Number(_tmp[key].startTime.slice(2,4));
+					var ed = Number(_tmp[key].endTime.slice(0,2))*60 + Number(_tmp[key].endTime.slice(2,4));
+					var date = new Date(_tmp[key].date.slice(0,4) + '-' + _tmp[key].date.slice(4,6) + '-' + _tmp[key].date.slice(6,8));
+					if(_tmp[key].date>=$('#addS0').val() && _tmp[key].date<=$('#addS6').val()){
+						var t = $("<div class='task box_center' id=" + _tmp[key].date +'' + _tmp[key].startTime + "><input type='button' value='X' class='taskDel'>" + _tmp[key].contents + '</div>');
+						$('#calMain_day'+date.getDay()).append(t);
+						$(t).css("margin-top", st-bef+"px").css("height", ed-st-2+"px");
+						bef = ed;
+					}
+					befDate = _tmp[key].date;
+				}
+	
+				$('.taskDel').unbind('click');
+				$('.taskDel').bind('click', function(){
+					$.ajax({
+						type: "POST",
+						url: "/removeTask",
+						data: "contents=" + $(this).parent().text() + "&date=" + $(this).parent().attr('id').slice(0,8) + "&startTime=" + $(this).parent().attr('id').slice(8,12),
+						success: function(){
+						}
+					});
+					$(this).parent().remove();
+				});
+			}
+		});
+	}
 
 }
 
@@ -167,7 +220,8 @@ function UpdateUser(){
 			for(var key in _tmp){
 				$('#tmpUserName').append($('<option>', {
 					value : _tmp[key].name,
-					text : _tmp[key].name
+					text : _tmp[key].name,
+					id : _tmp[key]._id
 				}));
 			}
 		}
@@ -182,31 +236,11 @@ function setGroupAdd(){		//set NEW GROUP and MEMBER event
 		$.ajax({
 			type: 'POST',
 			url: '/createGroup',
-			data: "name=" + $('#newGroupName').val() + "&leader=" + $('#newGroupName').attr('name'),
+			data: "name=" + $('#newGroupName').val() + "&leader=" + $("#tmpUserName option[value="+$('#tmpUserName').val()+"]").attr('id'),
 			success: function(){
 
 			}
 		});
 	});
-	
-	$('#newMemberSubmit').unbind('click');
-	$('#newMemberSubmit').bind('click',function(){
 
-		$.ajax({
-			type: 'POST',
-			url: '/updateGroup',
-			data: "name=" + $('#newGroupName').val() + "&member_id=" + $('#newMemberName').val(),
-			success: function(){
-
-			}
-		});
-	});
-}
-
-function setGroupSwitch(){
-	$(document).ready(function(){
-		$('#groupList').on('click','.glElement',function(err){
-			$('#topTitle').text($(this).find('p.glName').text());
-		});
-	});
 }

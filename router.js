@@ -13,6 +13,7 @@ exports.route = function(app){
 	app.post('/removeTask', task.remove);
 	
 	app.post('/listGroup', group.list);
+	app.post('/listGroupMembers', group.members);
 	app.post('/createGroup', group.create);
 	app.post('/updateGroup', group.update);
 	app.post('/removeGroup', group.remove);

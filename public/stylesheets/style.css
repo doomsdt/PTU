@@ -66,10 +66,17 @@ aside{
 }
 
 #groupList{	
-	width:160px;
+	
+}
+
+.glBox{
+	position:relative;
+	display:inline-block;
 }
 
 .glElement{
+	
+	float:left;
 	border:4px solid black;
 	width:150px;
 	margin:10px;
@@ -81,7 +88,7 @@ aside{
 }
 
 a.divLink{
-
+	vertical-align:center;
 	width: 100%;
 	height: 100%;
 	top: 0;
@@ -100,6 +107,15 @@ a.divLink{
 	text-align:center;
 	margin:auto;
 	font-size:20px;
+}
+
+.glJoin{
+	position:absolute;
+	right:0;
+	top:50%;
+	transform: translateY(-50%);
+	display:block;
+	z-index: 11;
 }
 
 .schdTimes{

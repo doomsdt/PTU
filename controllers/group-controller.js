@@ -9,20 +9,27 @@ exports.list = function(req, res){
 	});
 }
 
+exports.members = function(req, res){
+	var tmp;
+	Group.find({_id:req.body.groupId},'members',function(err,arr){
+
+		tmp = JSON.stringify(arr);
+		res.send(tmp);
+	});
+}
+
 exports.create = function(req, res){
-	console.log('Info : ' + req.body.name + ' ' + req.body.leader);
 	new Group({
 		name: req.body.name,
-		leader: req.body.leader
+		leader: req.body.leader_id
 	}).save();
 	
 	res.end();
 }
 
 exports.update = function(req, res){
-	console.log('Info : ' + req.body.name + ' ' + req.body.member_id);
 	Group.update(
-		{name: req.body.name},
+		{_id: req.body.id},
 		{$addToSet: {members: req.body.member_id}},
 		function(err){}
 		

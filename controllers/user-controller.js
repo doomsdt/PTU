@@ -2,10 +2,18 @@ var Member = require('../models/users.js');
 
 exports.list = function(req,res){
 	var tmp;
-	Member.find(function(err,members){
-		tmp = JSON.stringify(members);
-		res.send(tmp);
-	});
+	if(req.body.id){
+		Member.find({_id:req.body.id}).exec(function(err,members){
+			tmp = JSON.stringify(members);
+			res.send(tmp);
+		});
+	}
+	else{
+		Member.find().exec(function(err,members){
+			tmp = JSON.stringify(members);
+			res.send(tmp);
+		});
+	}
 	
 }
 
