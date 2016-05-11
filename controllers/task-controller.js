@@ -8,8 +8,8 @@ exports.list = function(req, res) {
 			tmp = JSON.stringify(tasks);
 			res.send(tmp);
 		});
-	} else if(req.body.members){
-		Task.find({date : {$gte:req.body.startDate, $lte:req.body.endDate}, user : {$in : JSON.parse(req.body.members)}}).sort({date: 1, startTime: 1}).exec(function(err,tasks){
+	} else{
+		Task.find({date : {$gte:req.body.startDate, $lte:req.body.endDate}}).or([{group : req.body.group}, {user : {$in : JSON.parse(req.body.members)}}]).sort({date: 1, startTime: 1}).exec(function(err,tasks){
 			tmp = JSON.stringify(tasks);
 			res.send(tmp);
 		});
@@ -17,19 +17,30 @@ exports.list = function(req, res) {
 };
 
 exports.create = function(req, res) {
+	if(req.body.user){
+		Task.find(function(err, tasks) {
+			new Task({
+				user: req.body.user,
+				date: req.body.date,
+				startTime:req.body.startTime,
+				endTime: req.body.endTime,
+				contents: req.body.contents
+			}).save();			
+		});
+	}
 	
-	Task.find(function(err, tasks) {
-		new Task({
-			user: req.body.user,
-			date: req.body.date,
-			startTime:req.body.startTime,
-			endTime: req.body.endTime,
-			contents: req.body.contents
-		}).save();
-		
-		res.end();
-		
-	});
+	else{
+		Task.find(function(err, tasks) {
+			new Task({
+				group: req.body.group,
+				date: req.body.date,
+				startTime:req.body.startTime,
+				endTime: req.body.endTime,
+				contents: req.body.contents
+			}).save();			
+		});
+	}
+	res.end();
 };
 
 exports.update = function(req, res) {

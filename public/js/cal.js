@@ -1,3 +1,4 @@
+var groupFlag = false;
 
 function initCal(y,m,start_day){	//draw week calendar
 	var today = new Date().getDay();
@@ -52,11 +53,13 @@ function initGroups(){		//get GROUP LIST and show
 		
 			$('.glElement').not('#glMine').on('click', function(err){
 				$('#topTitle').text($(this).find('p.glName').text());
+				$('#topTitle').attr('value',1);
 				UpdateDate(null,$(this).attr('id'));
 			});
 			
 			$('#glMine').on('click', function(err){
 				$('#topTitle').text($(this).find('p.glName').text());
+				$('#topTitle').attr('value',0);
 				UpdateDate($("#tmpUserName option[value="+$('#tmpUserName').val()+"]").attr('id'),null);
 			});
 
@@ -116,8 +119,14 @@ function setEvent(){	//set NEW TASK event
 		var ed = get_number_str($('#addSedH').val()) + "" + get_number_str($('#addSedM').val());
 		var cont = $('#addScont').val();
 
-		var formData = "date=" + $('#addSdate').val() + "&startTime=" + st + "&endTime=" + ed + "&contents=" + cont + 
-						"&user=" + $("#tmpUserName option[value="+$('#tmpUserName').val()+"]").attr('id');
+		if($('#topTitle').attr('value')==0)
+			var formData = "date=" + $('#addSdate').val() + "&startTime=" + st + "&endTime=" + ed + "&contents=" + cont + 
+							"&user=" + $("#tmpUserName option[value="+$('#tmpUserName').val()+"]").attr('id');
+		else{
+			var formData = "date=" + $('#addSdate').val() + "&startTime=" + st + "&endTime=" + ed + "&contents=" + cont + 
+							"&group=" + $(".glName").filter(function(){ return $(this).text() == $('#topTitle').text() }).parent().attr('id');
+					
+		}
 		$.ajax({
 			type: "POST",
 			url: '/createTask',
@@ -159,9 +168,47 @@ function UpdateDate(userId,groupId){		//get TASK LIST and show
 					type: "POST",
 					url: '/list',
 					data: "startDate=" + $('#addS0').val() + "&endDate=" + $('#addS6').val() +"&members=" + 
-					JSON.stringify(JSON.parse(ret)[0].members),
-					success: function(retu){
-						console.log(retu);
+					JSON.stringify(JSON.parse(ret)[0].members) + "&group=" + groupId,
+					success: function(data){
+						var bef = 540;
+						var befDate, curDate;
+						var _tmp = JSON.parse(data);
+						$('.calDayCol div').remove();
+			
+						for(var i=0;i<_tmp.length;i++){
+							var curTask = _tmp[i];
+							if(curTask.user){
+								for(var j=1;i+j<_tmp.length;j++){
+									var nextTask = _tmp[i+j];
+									if(nextTask.user){
+										if(curTask.date == nextTask.date && curTask.endTime >= nextTask.startTime){
+											curTask.endTime = nextTask.endTime;
+											i++;
+										}
+									}
+								}
+							}
+							curDate = curTask.date;
+							if(curDate != befDate) bef = 540;
+							var st = Number(curTask.startTime.slice(0,2))*60 + Number(curTask.startTime.slice(2,4));
+							var ed = Number(curTask.endTime.slice(0,2))*60 + Number(curTask.endTime.slice(2,4));
+							var date = new Date(curTask.date.slice(0,4) + '-' + curTask.date.slice(4,6) + '-' + curTask.date.slice(6,8));
+							if(curTask.date>=$('#addS0').val() && curTask.date<=$('#addS6').val()){
+								var t = $("<div class='task box_center' id=" + curTask.date +'' + curTask.startTime + 
+										"></div>");
+								
+								if(curTask.group){
+									$(t).text(curTask.contents);
+									$(t).css("background-color","#CC3D3D");
+								}
+								
+								$('#calMain_day'+date.getDay()).append(t);
+								$(t).css("margin-top", st-bef+"px").css("height", ed-st-2+"px");
+																				
+								bef = ed;
+							}
+							befDate = _tmp[i].date;
+						}
 					}
 				});
 			}
@@ -192,21 +239,21 @@ function UpdateDate(userId,groupId){		//get TASK LIST and show
 					}
 					befDate = _tmp[key].date;
 				}
-	
-				$('.taskDel').unbind('click');
-				$('.taskDel').bind('click', function(){
-					$.ajax({
-						type: "POST",
-						url: "/removeTask",
-						data: "contents=" + $(this).parent().text() + "&date=" + $(this).parent().attr('id').slice(0,8) + "&startTime=" + $(this).parent().attr('id').slice(8,12),
-						success: function(){
-						}
-					});
-					$(this).parent().remove();
-				});
+				
+			}
+		});		
+	}
+	$('.taskDel').unbind('click');
+	$('.taskDel').bind('click', function(){
+		$.ajax({
+			type: "POST",
+			url: "/removeTask",
+			data: "contents=" + $(this).parent().text() + "&date=" + $(this).parent().attr('id').slice(0,8) + "&startTime=" + $(this).parent().attr('id').slice(8,12),
+			success: function(){
 			}
 		});
-	}
+		$(this).parent().remove();
+	});
 
 }
 
