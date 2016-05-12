@@ -6,11 +6,18 @@
 }
 
 .task{
+	position:relative;
 	border:1px solid red;
 	width:99px;
 	height:30px;
 	background-color: black;
 	color: white;
+}
+
+.taskDel{
+	position:absolute;
+	right:0%;
+	top:0%;
 }
 
 .myspan {
@@ -154,6 +161,11 @@ a.divLink{
 	height:70px;
 }
 
+.prevWeek:hover{
+	cursor: hand;
+	cursor: pointer;
+}
+
 .curWeek{
 	float:left;
 	width:314px;
@@ -165,4 +177,9 @@ a.divLink{
 	float:left;
 	width:200px;
 	height:70px;
+}
+
+.nextWeek:hover{
+	cursor: hand;
+	cursor: pointer;
 }

@@ -60,15 +60,29 @@ exports.update = function(req, res) {
 };
 
 exports.remove = function(req,res) {
+	if(req.body.user){
+		Task.remove({
+			user : req.body.user,
+			contents : req.body.contents,
+			date : req.body.date,
+			startTime : req.body.startTime
+		}, function(err){
+			if(err)
+				throw err;
+		});
+	}
 	
-	Task.remove({
-		contents : req.body.contents,
-		date : req.body.date,
-		startTime : req.body.startTime
-	}, function(err){
-		if(err)
-			throw err;
-	});
+	else{
+		Task.remove({
+			group : req.body.group,
+			contents : req.body.contents,
+			date : req.body.date,
+			startTime : req.body.startTime
+		}, function(err){
+			if(err)
+				throw err;
+		});
+	}
 
 	res.end();
 };

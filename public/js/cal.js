@@ -10,10 +10,14 @@ function initCal(y,m,start_day){	//draw week calendar
 	for(var i=0;i<15;i++){
 		$('#calTime').append("<div class = 'times box_center'>" + (i+9) +"</div>");
 	}
-
+	var dt = start_day;
 	for(var i=0;i<7;i++){
-		$('#addS'+i).val(y + "" + get_number_str(m) + "" + get_number_str(start_day.getDate()+i));
+		
+		$('#day'+i).find('.yoilDate').text((dt.getMonth()+1) + '.' + dt.getDate() + ' ');
+		$('#addS'+i).val(y + "" + get_number_str(m) + "" + get_number_str(start_day.getDate()));
+		dt.setDate(dt.getDate()+1);
 	}
+	dt.setDate(dt.getDate()-7);
 
 	$('.addSday').unbind('click');
 	$('.addSday').bind('click', function(){
@@ -25,12 +29,15 @@ function initCal(y,m,start_day){	//draw week calendar
 }
 
 function initGroups(){		//get GROUP LIST and show
+	if(!$('#topTitle').text())
+		$('#topTitle').attr('value',0);
 	$.ajax({
 		type: 'POST',
 		url: '/listGroup',
 		success: function(data){
 			var _tmp = JSON.parse(data);
 			$('#groupList div').remove();
+			$('#groupList br').remove();
 			
 			$('#groupList').append("<div class='glBox'><div class='glElement' id='glMine'><p class='glName'> 내 시간표 </p></div></div></br>");
 			
@@ -54,13 +61,13 @@ function initGroups(){		//get GROUP LIST and show
 			$('.glElement').not('#glMine').on('click', function(err){
 				$('#topTitle').text($(this).find('p.glName').text());
 				$('#topTitle').attr('value',1);
-				UpdateDate(null,$(this).attr('id'));
+				UpdateDate($(this).attr('id'));
 			});
 			
 			$('#glMine').on('click', function(err){
 				$('#topTitle').text($(this).find('p.glName').text());
 				$('#topTitle').attr('value',0);
-				UpdateDate($("#tmpUserName option[value="+$('#tmpUserName').val()+"]").attr('id'),null);
+				UpdateDate($("#tmpUserName option[value="+$('#tmpUserName').val()+"]").attr('id'));
 			});
 
 			$('.glJoin').on('click',function(){
@@ -101,38 +108,63 @@ function setTitle(year,month,startDay){		//switch week
 	})
 }
 
-function resetCalendar(year,month,startDay){	//reset all
+function initCalendar(year,month,startDay){
 	setTitle(year,month,startDay);
 	initCal(year,month,startDay);
-	initGroups();
+	initGroups();		//no need to reset
+	UpdateUser();
+	if($('#topTitle').attr('value')==0)
+		var paramId = $("#tmpUserName option[value="+$('#tmpUserName').val()+"]").attr('id');
+	else
+		var paramId = $(".glName").filter(function(){ return $(this).text() == $('#topTitle').text() }).parent().attr('id');
+	
+	UpdateDate(paramId);
 	setEvent();
 }
 
+function resetCalendar(year,month,startDay){	//reset all
+	setTitle(year,month,startDay);
+	initCal(year,month,startDay);
+	if($('#topTitle').attr('value')==0)
+		var paramId = $("#tmpUserName option[value="+$('#tmpUserName').val()+"]").attr('id');
+	else
+		var paramId = $(".glName").filter(function(){ return $(this).text() == $('#topTitle').text() }).parent().attr('id');
+	
+	UpdateDate(paramId);
+	setEvent();
+	
+}
+
 function setEvent(){	//set NEW TASK event
-	//UpdateDate();
-	UpdateUser();
+	
 	setGroupAdd();
 
 	$('#addSsubmit').unbind('click');
 	$('#addSsubmit').bind('click', function(){
+		var paramId;
+		
 		var st = get_number_str($('#addSstH').val()) + "" + get_number_str($('#addSstM').val());
 		var ed = get_number_str($('#addSedH').val()) + "" + get_number_str($('#addSedM').val());
 		var cont = $('#addScont').val();
 
-		if($('#topTitle').attr('value')==0)
+		if($('#topTitle').attr('value')==0)	{	
+			paramId = $("#tmpUserName option[value="+$('#tmpUserName').val()+"]").attr('id');
 			var formData = "date=" + $('#addSdate').val() + "&startTime=" + st + "&endTime=" + ed + "&contents=" + cont + 
-							"&user=" + $("#tmpUserName option[value="+$('#tmpUserName').val()+"]").attr('id');
-		else{
-			var formData = "date=" + $('#addSdate').val() + "&startTime=" + st + "&endTime=" + ed + "&contents=" + cont + 
-							"&group=" + $(".glName").filter(function(){ return $(this).text() == $('#topTitle').text() }).parent().attr('id');
-					
+							"&user=" + paramId;
 		}
+		
+		else {		
+			paramId = $(".glName").filter(function(){ return $(this).text() == $('#topTitle').text() }).parent().attr('id');
+			var formData = "date=" + $('#addSdate').val() + "&startTime=" + st + "&endTime=" + ed + "&contents=" + cont + 
+							"&group=" + paramId;	
+		}
+		
 		$.ajax({
 			type: "POST",
 			url: '/createTask',
 			data: formData,
-			success: function(){
-				//UpdateDate();
+			complete: function(){
+				UpdateDate(paramId);
 			}
 		});
 		$('.schdTimes').val(''); $('#addScont').val('');
@@ -145,7 +177,7 @@ function setEvent(){	//set NEW TASK event
 			url : '/createMember',
 			data : 'name=' + $('#tmpNewUser').val(),
 			success : function(){
-				UpdateUser();
+				UpdateUser(paramId);
 			}
 		});
 	});
@@ -156,19 +188,20 @@ function setEvent(){	//set NEW TASK event
 
 }
 
-function UpdateDate(userId,groupId){		//get TASK LIST and show
+function UpdateDate(paramId){		//get TASK LIST and show
 
-	if(groupId){
+	
+	if($('#topTitle').attr('value')==1){
 		$.ajax({
 			type: "POST",
 			url: '/listGroupMembers',
-			data: "groupId=" + groupId,
+			data: "groupId=" + paramId,
 			success: function(ret){
 				$.ajax({
 					type: "POST",
 					url: '/list',
 					data: "startDate=" + $('#addS0').val() + "&endDate=" + $('#addS6').val() +"&members=" + 
-					JSON.stringify(JSON.parse(ret)[0].members) + "&group=" + groupId,
+					JSON.stringify(JSON.parse(ret)[0].members) + "&group=" + paramId,
 					success: function(data){
 						var bef = 540;
 						var befDate, curDate;
@@ -195,10 +228,11 @@ function UpdateDate(userId,groupId){		//get TASK LIST and show
 							var date = new Date(curTask.date.slice(0,4) + '-' + curTask.date.slice(4,6) + '-' + curTask.date.slice(6,8));
 							if(curTask.date>=$('#addS0').val() && curTask.date<=$('#addS6').val()){
 								var t = $("<div class='task box_center' id=" + curTask.date +'' + curTask.startTime + 
-										"></div>");
+										"><span class='taskCon'></span></div>");
 								
 								if(curTask.group){
-									$(t).text(curTask.contents);
+									$(t).append("<input type='button' value='X' class='taskDel'>");
+									$(t).find('.taskCon').text(curTask.contents);
 									$(t).css("background-color","#CC3D3D");
 								}
 								
@@ -209,7 +243,9 @@ function UpdateDate(userId,groupId){		//get TASK LIST and show
 							}
 							befDate = _tmp[i].date;
 						}
+						setTaskDel(paramId);
 					}
+				
 				});
 			}
 		});
@@ -218,7 +254,7 @@ function UpdateDate(userId,groupId){		//get TASK LIST and show
 		$.ajax({
 			type: "POST",
 			url: '/list',
-			data: "startDate=" + $('#addS0').val() + "&endDate=" + $('#addS6').val() + "&userId=" + userId,
+			data: "startDate=" + $('#addS0').val() + "&endDate=" + $('#addS6').val() + "&userId=" + paramId,
 			success: function(data) {
 				var bef = 540;
 				var befDate, curDate;
@@ -232,29 +268,48 @@ function UpdateDate(userId,groupId){		//get TASK LIST and show
 					var ed = Number(_tmp[key].endTime.slice(0,2))*60 + Number(_tmp[key].endTime.slice(2,4));
 					var date = new Date(_tmp[key].date.slice(0,4) + '-' + _tmp[key].date.slice(4,6) + '-' + _tmp[key].date.slice(6,8));
 					if(_tmp[key].date>=$('#addS0').val() && _tmp[key].date<=$('#addS6').val()){
-						var t = $("<div class='task box_center' id=" + _tmp[key].date +'' + _tmp[key].startTime + "><input type='button' value='X' class='taskDel'>" + _tmp[key].contents + '</div>');
+						var t = $("<div class='task box_center' id=" + _tmp[key].date +'' + _tmp[key].startTime + 
+								"><input type='button' value='X' class='taskDel'><span class='taskCon'>" + _tmp[key].contents + '</span></div>');
 						$('#calMain_day'+date.getDay()).append(t);
 						$(t).css("margin-top", st-bef+"px").css("height", ed-st-2+"px");
 						bef = ed;
 					}
 					befDate = _tmp[key].date;
 				}
-				
+				setTaskDel(paramId);
 			}
 		});		
 	}
+	
+	
+}
+
+function setTaskDel(id){
 	$('.taskDel').unbind('click');
 	$('.taskDel').bind('click', function(){
+		ajaxData = "contents=" + $(this).parent().find('.taskCon').text() + "&date=" + $(this).parent().attr('id').slice(0,8) + "&startTime=" + $(this).parent().attr('id').slice(8,12);
+
+		if($('#topTitle').attr('value')==0){
+			ajaxData += "&user=" + id;
+		}
+		else{
+			ajaxData += "&group=" + id;
+		}
 		$.ajax({
 			type: "POST",
 			url: "/removeTask",
-			data: "contents=" + $(this).parent().text() + "&date=" + $(this).parent().attr('id').slice(0,8) + "&startTime=" + $(this).parent().attr('id').slice(8,12),
-			success: function(){
+			data: ajaxData
+			
+			,success: function(){
+				$(this).parent().remove();
+				if($('#topTitle').attr('value')==0)
+					UpdateDate(id);
+				else
+					UpdateDate(id);
 			}
 		});
-		$(this).parent().remove();
+		
 	});
-
 }
 
 function UpdateUser(){
@@ -263,6 +318,7 @@ function UpdateUser(){
 		type : 'POST',
 		url : '/listMember',
 		success : function(data){
+			$('#tmpUserName option').remove();
 			_tmp = JSON.parse(data);
 			for(var key in _tmp){
 				$('#tmpUserName').append($('<option>', {
