@@ -1,6 +1,8 @@
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name = "viewport" content="width=device-width, initial-scale=1">
 <title>Insert title here</title>
 <script src="//code.jquery.com/jquery-1.10.1.min.js"></script>
 <script src="js/header.js"></script>
@@ -8,6 +10,7 @@
 <script src="js/facebook.js"></script>
 <script src="js/group.js"></script>
 <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 </head>
 
 <script>
@@ -94,13 +97,13 @@ window.fbAsyncInit = function() {
 			<div id = 'calTime'>
 			</div>
 			<div id = 'calMain'>
-				<div id='day0' class = 'cel yoil box_center red'><span class='yoilDate'></span>일<button id = 'addS0' class = 'addSday'>+</button></div>
-				<div id='day1' class = 'cel yoil box_center'><span class='yoilDate'></span>월<button id = 'addS1' class = 'addSday'>+</button></div>
-				<div id='day2' class = 'cel yoil box_center'><span class='yoilDate'></span>화<button id = 'addS2' class = 'addSday'>+</button></div>
-				<div id='day3' class = 'cel yoil box_center'><span class='yoilDate'></span>수<button id = 'addS3' class = 'addSday'>+</button></div>
-				<div id='day4' class = 'cel yoil box_center'><span class='yoilDate'></span>목<button id = 'addS4' class = 'addSday'>+</button></div>
-				<div id='day5' class = 'cel yoil box_center'><span class='yoilDate'></span>금<button id = 'addS5' class = 'addSday'>+</button></div>
-				<div id='day6' class = 'cel yoil box_center blue'><span class='yoilDate'></span>토<button id = 'addS6' class = 'addSday'>+</button></div>
+				<div id='day0' class = 'cel yoil box_center red'><span class='yoilDate'></span>일 <button id = 'addS0' class = 'btn btn-default btn-xs addSday'>+</button></div>
+				<div id='day1' class = 'cel yoil box_center'><span class='yoilDate'></span>월 <button id = 'addS1' class = 'btn btn-default btn-xs addSday'>+</button></div>
+				<div id='day2' class = 'cel yoil box_center'><span class='yoilDate'></span>화 <button id = 'addS2' class = 'btn btn-default btn-xs addSday'>+</button></div>
+				<div id='day3' class = 'cel yoil box_center'><span class='yoilDate'></span>수 <button id = 'addS3' class = 'btn btn-default btn-xs addSday'>+</button></div>
+				<div id='day4' class = 'cel yoil box_center'><span class='yoilDate'></span>목 <button id = 'addS4' class = 'btn btn-default btn-xs addSday'>+</button></div>
+				<div id='day5' class = 'cel yoil box_center'><span class='yoilDate'></span>금 <button id = 'addS5' class = 'btn btn-default btn-xs addSday'>+</button></div>
+				<div id='day6' class = 'cel yoil box_center blue'><span class='yoilDate'></span>토 <button id = 'addS6' class = 'btn btn-default btn-xs addSday'>+</button></div>
 				<div id = 'calMain_day0' class = 'calDayCol'></div>
 				<div id = 'calMain_day1' class = 'calDayCol'></div>
 				<div id = 'calMain_day2' class = 'calDayCol'></div>
@@ -116,8 +119,7 @@ window.fbAsyncInit = function() {
 		<select id='tmpUserName'>
 		</select>
 		<input type = 'text' id = 'tmpNewUser' >
-		<input type = 'button' id = 'tmpNewUserSubmit' value = '등록'>
-		<input type = 'button' id = 'tmpTmp' value = '등록'>
+		<input type = 'button' id = 'tmpNewUserSubmit' value = '새 멤버'>
 	
 		</div>
 		<div id = 'addSchd'>
@@ -129,14 +131,12 @@ window.fbAsyncInit = function() {
 				<input type = 'text' name='' class = schdTimes id = addSedH> 시
 				<input type = 'text' name='' class = schdTimes id = addSedM> 분 </br>
 				<input type = 'text' name='' id = addScont>
-				<input type = 'button' id = addSsubmit value='등록'>
+				<input type = 'button' id = addSsubmit value='새 일정'>
 			</form>
 		</div>
 		<div id = 'group'>
 			<input type = 'text' id = newGroupName>
 			<input type = 'button' id = newGroupSubmit value='그룹 추가'> </br>
-			<input type = 'text' id = newMemberName>
-			<input type = 'button' id = newMemberSubmit value='멤버 추가'> </br>
 			<div id = 'groupList'>
 			</div>		
 		</div>

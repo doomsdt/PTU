@@ -7,17 +7,17 @@
 
 .task{
 	position:relative;
-	border:1px solid red;
 	width:99px;
 	height:30px;
-	background-color: black;
+	border-radius: 3px;
+	background-color: #B2CCFF;
 	color: white;
 }
 
 .taskDel{
 	position:absolute;
-	right:0%;
-	top:0%;
+	right:2px;
+	top:2px;
 }
 
 .myspan {
@@ -48,7 +48,7 @@
 
 .calDayCol{
 	float:left;
-	width:102px;
+	width:100px;
 	height:100px;
 }
 

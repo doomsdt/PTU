@@ -20,4 +20,5 @@ exports.route = function(app){
 	
 	app.post('/listMember', member.list)
 	app.post('/createMember', member.create);
+	app.post('/updateMember', member.update);
 };

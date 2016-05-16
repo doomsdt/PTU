@@ -11,7 +11,7 @@ exports.list = function(req, res){
 
 exports.members = function(req, res){
 	var tmp;
-	Group.find({_id:req.body.groupId},'members',function(err,arr){
+	Group.find({_id:req.body.groupId},'leader members',function(err,arr){
 
 		tmp = JSON.stringify(arr);
 		res.send(tmp);

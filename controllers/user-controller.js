@@ -19,7 +19,6 @@ exports.list = function(req,res){
 
 
 exports.create = function(req,res){
-	console.log("name :" + req.body.name);
 	new Member({
 		name : req.body.name,
 		
@@ -27,4 +26,15 @@ exports.create = function(req,res){
 	
 	res.end();
 	
+}
+
+exports.update = function(req,res){
+	Member.update(
+			{_id: req.body.id},
+			{$addToSet: {groups: req.body.groupId}},
+			function(err){}
+			
+		);
+		
+		res.end();
 }

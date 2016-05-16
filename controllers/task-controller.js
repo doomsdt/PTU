@@ -3,8 +3,7 @@ var Task = require('../models/tasks.js');
 exports.list = function(req, res) {
 	var tmp;
 	if(req.body.userId){
-		Task.find({date : {$gte:req.body.startDate, $lte:req.body.endDate}, user:req.body.userId}).sort({date: 1, startTime: 1}).exec(function(err,tasks){
-	
+		Task.find({date : {$gte:req.body.startDate, $lte:req.body.endDate}}).or([{user:req.body.userId}, {group : {$in : JSON.parse(req.body.groups)}}]).sort({date: 1, startTime: 1}).exec(function(err,tasks){	
 			tmp = JSON.stringify(tasks);
 			res.send(tmp);
 		});
