@@ -87,13 +87,16 @@ window.fbAsyncInit = function() {
 <input type = 'hidden'  id = 'userName' >
 <input type = 'hidden'  id = 'picUrl' >
 
-<header id='topTitle' value='0'></header>
-
-	<div id = 'main'>
-		<div class = 'prevWeek box_center'></div>
-		<div class = 'curWeek box_center'></div>
-		<div class = 'nextWeek box_center'></div>
-		<div id = 'cal'>
+<header></header>
+<div class='row' id='calTop'>
+	<div id='topTitle' class = 'box_center' value='0'></div>
+	<div id='prevWeek' class = 'prevNextWeek box_center'></div>
+	<div id='curWeek' class = 'box_center'></div>
+	<div id='nextWeek' class = 'prevNextWeek box_center'></div>
+</div>
+<div class='row'>
+	<div id = 'main' class='col-lg-8'>		
+		<div id = 'cal' class='row'>
 			<div id = 'calTime'>
 			</div>
 			<div id = 'calMain'>
@@ -114,7 +117,7 @@ window.fbAsyncInit = function() {
 			</div>
 		</div>		
 	</div>
-	<aside>
+	<div id = 'side' class='col-lg-4'>
 		<div id = 'tmp'>
 		<select id='tmpUserName'>
 		</select>
@@ -123,7 +126,7 @@ window.fbAsyncInit = function() {
 	
 		</div>
 		<div id = 'addSchd'>
-			<p id = 'schdDate'></p>
+			<p id = 'schdDate'>일정 추가</p>
 			<form>
 				<input type = 'hidden' id = addSdate>
 				<input type = 'text' name='' class = schdTimes id = addSstH> 시
@@ -131,7 +134,7 @@ window.fbAsyncInit = function() {
 				<input type = 'text' name='' class = schdTimes id = addSedH> 시
 				<input type = 'text' name='' class = schdTimes id = addSedM> 분 </br>
 				<input type = 'text' name='' id = addScont>
-				<input type = 'button' id = addSsubmit value='새 일정'>
+				<input type = 'button' id = addSsubmit class='btn btn-primary btn-sm' value='새 일정'>
 			</form>
 		</div>
 		<div id = 'group'>
@@ -140,7 +143,8 @@ window.fbAsyncInit = function() {
 			<div id = 'groupList'>
 			</div>		
 		</div>
-	</aside>
+	</div>
+</div>
 </body>
 
 </html>

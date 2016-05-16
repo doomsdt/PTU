@@ -1,15 +1,60 @@
-.cel{
-	border:1px solid #999999;
+html, body {
+	max-width : 100%;
+	overflow-x : hidden;
+}
+
+#calTop{
+	width:67%;
+	min-height:1px;
+	display:inline-block;
+}
+
+#topTitle{
 	float:left;
-	width:100px;
-	height:18px;
+	min-height:1px;
+	font-size:30px;
+	width:24%;
+}
+
+.prevNextWeek{
+	float:left;
+	width:20%;
+	font-size:18px;
+}
+
+#curWeek{
+	font-size:18px;
+	width:32%;
+	float:left;
+}
+
+.prevNextWeek:hover{
+	cursor: hand;
+	cursor: pointer;
+}
+
+#main{
+	background-color:#e7eef6;
+	padding:0px;
+}
+
+#side{
+	padding:0px;
+}
+
+.cel{
+	
+	float:left;
+	width:14%;
+	height:40px;
 }
 
 .task{
 	position:relative;
-	width:99px;
+	width:100%;
 	height:30px;
 	border-radius: 3px;
+
 	background-color: #B2CCFF;
 	color: white;
 }
@@ -24,46 +69,42 @@
 	display: block;
 }
 
-#topTitle{
-	font-size:30px;
-	margin-left:300px;
-}
+
 
 #cal{
+	width:100%;
 	clear:left;
-	width:820px;
 	float:left;
 }
 
 #calTime{
+	width:12%;
 	margin-top:40px;
-	width:102px;
 	height:910px;
 	float:left;
 }
 
 #calMain{
-	
+	width:88%;
+	height:100%;
+	display:inline-block;
 }
+
 
 .calDayCol{
 	float:left;
-	width:100px;
-	height:100px;
-}
-
-aside{
-	float:left;
-}
-
-#tmp{
-	
+	width:14%;
+	min-height: 1px;
+	display:inline-block;
 }
 
 #addSchd{
-	border-bottom:1px solid black;
-	margin-left:20px;
-	
+	width:100%;
+	height:180px;
+	background-color:#6ed3cf;
+	padding:20px;
+	color:white;
+	font-weight:bold;
 }
 
 #group{
@@ -130,13 +171,17 @@ a.divLink{
 }
 
 .times{
-	border:1px solid #999999;
-	width:100px;
-	height:58px;
+	margin-left:2px;
+	border-bottom:1px solid #878E96;
+	height:60px;
+	text-align:center;
 }
 
-.yoil{
-	height:40px;
+.times span{
+	right:10%;
+	color:#878E96;
+	font-family:sans-serif;
+	font-weight:bold;
 }
 
 .red{
@@ -152,34 +197,4 @@ a.divLink{
 	-webkit-box-orient: horizontal;
 	-webkit-box-pack: center;
 	-webkit-box-align: center;
-}
-
-.prevWeek{
-	margin-left: 50px;
-	float:left;
-	width:200px;
-	height:70px;
-}
-
-.prevWeek:hover{
-	cursor: hand;
-	cursor: pointer;
-}
-
-.curWeek{
-	float:left;
-	width:314px;
-	height:70px;
-	font-size:20px;
-}
-
-.nextWeek{
-	float:left;
-	width:200px;
-	height:70px;
-}
-
-.nextWeek:hover{
-	cursor: hand;
-	cursor: pointer;
 }

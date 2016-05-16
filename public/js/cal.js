@@ -8,7 +8,7 @@ function initCal(y,m,start_day){	//draw week calendar
 	$('#calTime').empty();
 
 	for(var i=0;i<15;i++){
-		$('#calTime').append("<div class = 'times box_center'>" + (i+9) +"</div>");
+		$('#calTime').append("<div class = 'times box_center'><span>" + (i+9) +"</span></div>");
 	}
 	var dt = start_day;
 	for(var i=0;i<7;i++){
@@ -94,22 +94,24 @@ function initGroups(){		//get GROUP LIST and show
 function setTitle(year,month,startDay){		//switch week
 	var endDay = new Date(startDay.getFullYear(),startDay.getMonth(),startDay.getDate()+6);
 
-	$('.prevWeek').text('<');
-	$('.curWeek').text(startDay.getFullYear() + '.' + get_number_str(startDay.getMonth()+1)
+	$('#prevWeek').text('<');
+	$('#curWeek').text(startDay.getFullYear() + '.' + get_number_str(startDay.getMonth()+1)
 		+ '.' + get_number_str(startDay.getDate()) + ' ~ ' + endDay.getFullYear() + '.' + get_number_str(endDay.getMonth()+1)
 	+ '.' + get_number_str(endDay.getDate()));
 
-	$('.nextWeek').text('>');
+	$('#nextWeek').text('>');
 
-	$('.prevWeek').on('click',function(){
+	$('#prevWeek').unbind('click');
+	$('#prevWeek').on('click',function(){
 		startDay.setDate(startDay.getDate()-7);
 		resetCalendar(startDay.getFullYear(),startDay.getMonth()+1,startDay);
 	});
 
-	$('.nextWeek').on('click',function(){
+	$('#nextWeek').unbind('click');
+	$('#nextWeek').on('click',function(){
 		startDay.setDate(startDay.getDate()+7);
 		resetCalendar(startDay.getFullYear(),startDay.getMonth()+1,startDay);
-	})
+	});
 }
 
 function initCalendar(year,month,startDay){
