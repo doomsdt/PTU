@@ -27,69 +27,6 @@ function initCal(y,m,start_day){	//draw week calendar
 
 }
 
-function initGroups(){		//get GROUP LIST and show
-	if(!$('#topTitle').text())
-		$('#topTitle').attr('value',0);
-	$.ajax({
-		type: 'POST',
-		url: '/listGroup',
-		success: function(data){
-			var _tmp = JSON.parse(data);
-			$('#groupList div').remove();
-			$('#groupList br').remove();
-			
-			$('#groupList').append("<div class='glBox'><div class='glElement' id='glMine'><p class='glName'> 내 시간표 </p></div></div></br>");
-			
-			for(var key in _tmp){
-				var leader;
-				$.ajax({
-					type:'POST',
-					url: '/listMember',
-					data: 'id=' + _tmp[key].leader,
-					async: false,
-					success: function(ret){
-						leader = JSON.parse(ret)[0].name;
-					}
-				});
-				$('#groupList').append("<div class='glBox'><div class='glElement' id="+ _tmp[key]._id +"><p class='glLeader'>"+leader
-						+"</p><p class='glName'>"+_tmp[key].name+"</p><p><a class='divLink'></a></p></div><input type='button' value='+' class='btn btn-warning btn-sm glJoin'></div></br>");
-
-			}
-		
-			$('.glElement').not('#glMine').on('click', function(err){
-				$('#topTitle').text($(this).find('p.glName').text());
-				$('#topTitle').attr('value',1);
-				UpdateDate($(this).attr('id'));
-			});
-			
-			$('#glMine').on('click', function(err){
-				$('#topTitle').text($(this).find('p.glName').text());
-				$('#topTitle').attr('value',0);
-				UpdateDate($("#tmpUserName option[value="+$('#tmpUserName').val()+"]").attr('id'));
-			});
-
-			$('.glJoin').on('click',function(){
-				var groupId = $(this).siblings(".glElement").attr('id');
-				var memberId = $("#tmpUserName option[value="+$('#tmpUserName').val()+"]").attr('id');
-				$.ajax({
-					type: 'POST',
-					url: '/updateGroup',
-					data: "id=" + groupId + "&member_id=" + memberId,
-					success: function(){
-						$.ajax({
-							type: 'POST',
-							url: '/updateMember',
-							data: 'id=' + memberId + '&groupId=' + groupId,
-							success : function(){
-								
-							}
-						});
-					}
-				});
-			});
-		}
-	});
-}
 
 function setTitle(year,month,startDay){		//switch week
 	var endDay = new Date(startDay.getFullYear(),startDay.getMonth(),startDay.getDate()+6);
@@ -115,18 +52,12 @@ function setTitle(year,month,startDay){		//switch week
 }
 
 function initCalendar(year,month,startDay){
+	$('.alert').hide();
 	setTitle(year,month,startDay);
 	initCal(year,month,startDay);
-	initGroups();		//no need to reset
 	UpdateUser();
-	if($('#topTitle').attr('value')==0){
-		console.log('in');
-		var paramId = $("#tmpUserName option[value="+$('#tmpUserName').val()+"]").attr('id');
-	}
-	else
-		var paramId = $(".glName").filter(function(){ return $(this).text() == $('#topTitle').text() }).parent().attr('id');
+	var paramId = $("#tmpUserName option[value="+$('#tmpUserName').val()+"]").attr('id');
 	
-	console.log(paramId);
 	UpdateDate(paramId);
 	setEvent();
 }
@@ -145,7 +76,7 @@ function resetCalendar(year,month,startDay){	//reset all
 }
 
 function setEvent(){	//set NEW TASK event
-	
+	setGroupFind();
 	setGroupAdd();
 
 	$('#addSsubmit').on('click', function(){
@@ -351,17 +282,3 @@ function UpdateUser(){
 	
 }
 
-function setGroupAdd(){		//set NEW GROUP and MEMBER event
-	$('#newGroupSubmit').on('click',function(){
-
-		$.ajax({
-			type: 'POST',
-			url: '/createGroup',
-			data: "name=" + $('#newGroupName').val() + "&leader_id=" + $("#tmpUserName option[value="+$('#tmpUserName').val()+"]").attr('id'),
-			success: function(){
-				initGroups();
-			}
-		});
-	});
-
-}

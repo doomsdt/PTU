@@ -2,7 +2,7 @@ var Group = require('../models/groups.js');
 
 exports.list = function(req, res){
 	var tmp;
-	Group.find({},'name leader',function(err,groups){
+	Group.find({name: {$regex: req.body.groupName, $options: 'i'}},'name leader',function(err,groups){
 
 		tmp = JSON.stringify(groups);
 		res.send(tmp);

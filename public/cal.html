@@ -5,7 +5,7 @@
 <meta name = "viewport" content="width=device-width, initial-scale=1">
 <title>Insert title here</title>
 <script src="//code.jquery.com/jquery-1.10.1.min.js"></script>
-<script src="js/header.js"></script>
+<script src="js/date.js"></script>
 <script src="js/cal.js"></script>
 <script src="js/facebook.js"></script>
 <script src="js/group.js"></script>
@@ -77,71 +77,93 @@ window.fbAsyncInit = function() {
 
 </script>
 
-<fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
-</fb:login-button>
-
-
 <div id="status">
 </div>
 <input type = 'hidden' id = 'userId' >
 <input type = 'hidden'  id = 'userName' >
 <input type = 'hidden'  id = 'picUrl' >
 
-<header></header>
-<div class='row' id='calTop'>
-	<div id='topTitle' class = 'box_center' value='0'></div>
-	<div id='prevWeek' class = 'prevNextWeek box_center'></div>
-	<div id='curWeek' class = 'box_center'></div>
-	<div id='nextWeek' class = 'prevNextWeek box_center'></div>
-</div>
-<div class='row'>
-	<div id = 'main' class='col-lg-8'>		
-		<div id = 'cal' class='row'>
-			<div id = 'calTime'>
-			</div>
-			<div id = 'calMain'>
-				<div id='day0' class = 'cel yoil box_center red'><span class='yoilDate'></span>일 <button id = 'addS0' class = 'btn btn-default btn-xs addSday'>+</button></div>
-				<div id='day1' class = 'cel yoil box_center'><span class='yoilDate'></span>월 <button id = 'addS1' class = 'btn btn-default btn-xs addSday'>+</button></div>
-				<div id='day2' class = 'cel yoil box_center'><span class='yoilDate'></span>화 <button id = 'addS2' class = 'btn btn-default btn-xs addSday'>+</button></div>
-				<div id='day3' class = 'cel yoil box_center'><span class='yoilDate'></span>수 <button id = 'addS3' class = 'btn btn-default btn-xs addSday'>+</button></div>
-				<div id='day4' class = 'cel yoil box_center'><span class='yoilDate'></span>목 <button id = 'addS4' class = 'btn btn-default btn-xs addSday'>+</button></div>
-				<div id='day5' class = 'cel yoil box_center'><span class='yoilDate'></span>금 <button id = 'addS5' class = 'btn btn-default btn-xs addSday'>+</button></div>
-				<div id='day6' class = 'cel yoil box_center blue'><span class='yoilDate'></span>토 <button id = 'addS6' class = 'btn btn-default btn-xs addSday'>+</button></div>
-				<div id = 'calMain_day0' class = 'calDayCol'></div>
-				<div id = 'calMain_day1' class = 'calDayCol'></div>
-				<div id = 'calMain_day2' class = 'calDayCol'></div>
-				<div id = 'calMain_day3' class = 'calDayCol'></div>
-				<div id = 'calMain_day4' class = 'calDayCol'></div>
-				<div id = 'calMain_day5' class = 'calDayCol'></div>
-				<div id = 'calMain_day6' class = 'calDayCol'></div>
-			</div>
-		</div>		
+<header>
+	<div class='row' id='calTop'>
+		<div id='topTitle' class = 'box_center' value='0'></div>
+		<div id='prevWeek' class = 'prevNextWeek box_center'></div>
+		<div id='curWeek' class = 'box_center'></div>
+		<div id='nextWeek' class = 'prevNextWeek box_center'></div>
 	</div>
-	<div id = 'side' class='col-lg-4'>
-		<div id = 'tmp'>
-		<select id='tmpUserName'>
-		</select>
-		<input type = 'text' id = 'tmpNewUser' >
-		<input type = 'button' id = 'tmpNewUserSubmit' value = '새 멤버'>
-	
-		</div>
-		<div id = 'addSchd'>
-			<p id = 'schdDate'>일정 추가</p>
-			<form>
-				<input type = 'hidden' id = addSdate>
-				<input type = 'text' name='' class = schdTimes id = addSstH> 시
-				<input type = 'text' name='' class = schdTimes id = addSstM> 분 ~
-				<input type = 'text' name='' class = schdTimes id = addSedH> 시
-				<input type = 'text' name='' class = schdTimes id = addSedM> 분 </br>
-				<input type = 'text' name='' id = addScont>
-				<input type = 'button' id = addSsubmit class='btn btn-primary btn-sm' value='새 일정'>
-			</form>
-		</div>
-		<div id = 'group'>
-			<input type = 'text' id = newGroupName>
-			<input type = 'button' id = newGroupSubmit value='그룹 추가'> </br>
-			<div id = 'groupList'>
+	<div id = 'alertSpace'>
+		<div class="alert alert-success fade in">
+	    	<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+		    <strong>Success!</strong> <span>그룹이 생성되었습니다.</span>
+	 	</div>
+	</div>
+</header>
+
+<div id='page'>
+<!--  
+<fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+</fb:login-button>-->
+	<div class='row'>
+		<div id = 'main'>		
+			<div id = 'cal' class='row'>
+				<div id = 'calTime'>
+				</div>
+				<div id = 'calMain'>
+					<div id='day0' class = 'cel yoil box_center red'><span class='yoilDate'></span>일 <button id = 'addS0' class = 'btn btn-default btn-xs addSday'>+</button></div>
+					<div id='day1' class = 'cel yoil box_center'><span class='yoilDate'></span>월 <button id = 'addS1' class = 'btn btn-default btn-xs addSday'>+</button></div>
+					<div id='day2' class = 'cel yoil box_center'><span class='yoilDate'></span>화 <button id = 'addS2' class = 'btn btn-default btn-xs addSday'>+</button></div>
+					<div id='day3' class = 'cel yoil box_center'><span class='yoilDate'></span>수 <button id = 'addS3' class = 'btn btn-default btn-xs addSday'>+</button></div>
+					<div id='day4' class = 'cel yoil box_center'><span class='yoilDate'></span>목 <button id = 'addS4' class = 'btn btn-default btn-xs addSday'>+</button></div>
+					<div id='day5' class = 'cel yoil box_center'><span class='yoilDate'></span>금 <button id = 'addS5' class = 'btn btn-default btn-xs addSday'>+</button></div>
+					<div id='day6' class = 'cel yoil box_center blue'><span class='yoilDate'></span>토 <button id = 'addS6' class = 'btn btn-default btn-xs addSday'>+</button></div>
+					<div id = 'calMain_day0' class = 'calDayCol'></div>
+					<div id = 'calMain_day1' class = 'calDayCol'></div>
+					<div id = 'calMain_day2' class = 'calDayCol'></div>
+					<div id = 'calMain_day3' class = 'calDayCol'></div>
+					<div id = 'calMain_day4' class = 'calDayCol'></div>
+					<div id = 'calMain_day5' class = 'calDayCol'></div>
+					<div id = 'calMain_day6' class = 'calDayCol'></div>
+				</div>
 			</div>		
+		</div>
+		<div id = 'side'>
+			<div id = 'tmp'>
+			<select id='tmpUserName'>
+			</select>
+			<input type = 'text' id = 'tmpNewUser' >
+			<input type = 'button' id = 'tmpNewUserSubmit' value = '새 멤버'>
+		
+			</div>
+			<div id = 'addSchd'>
+				<p id = 'schdDate'>일정 추가</p>
+				<form>
+					<div class='form-group'>
+						<input type = 'hidden' id = addSdate>
+						<input type = 'text' class = 'schdTimes' id = addSstH> 시
+						<input type = 'text' class = 'schdTimes' id = addSstM> 분 ~ 
+					
+						<input type = 'text' class = 'schdTimes' id = addSedH> 시
+						<input type = 'text' class = 'schdTimes' id = addSedM> 분
+					</div>
+					<div class='form-group'>
+					<input type = 'textarea' class = form-control id = addScont rows='2' placeholder='일정을 입력하세요...'>
+					</div>
+					<input type = 'submit' id = addSsubmit class='btn btn-primary' value='새 일정'>
+				</form>
+			</div>
+			<form class = 'form-inline'>
+				<div class='form-group'>
+					<input type = 'text' id = newGroupName class='form-control'>
+					<input type = 'button' id = newGroupSubmit class='btn btn-primary' value='그룹 추가'> </br>			
+				</div>
+			</form>
+			<form class = 'form-inline'>
+				<div class='form-group'>
+					<input type = 'text' id = groupFindName class='form-control'>
+					<input type = 'button' id = groupFind class='btn btn-primary' value='그룹 검색'> </br>			
+				</div>
+			</form>
+			<div id = 'groupList'>
+			</div>	
 		</div>
 	</div>
 </div>
