@@ -3,6 +3,20 @@ html, body {
 	overflow-x : hidden;
 }
 
+#userInfo{
+	text-align:center;
+}
+
+#userInfoPic{
+	padding:12%;
+	width:80%;
+}
+
+#userInfoName{
+	margin-left:auto;
+	margin-right:auto;
+}
+
 header{
 	background-color:#ffcbcb;
 	display:inline-block;

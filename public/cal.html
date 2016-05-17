@@ -5,12 +5,16 @@
 <meta name = "viewport" content="width=device-width, initial-scale=1">
 <title>Insert title here</title>
 <script src="//code.jquery.com/jquery-1.10.1.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <script src="js/date.js"></script>
 <script src="js/cal.js"></script>
 <script src="js/facebook.js"></script>
 <script src="js/group.js"></script>
+<script src="js/task.js"></script>
+<script src="/js/drawer.min.js"></script>
 <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="/css/bootstrap-drawer.min.css">
 </head>
 
 <script>
@@ -33,7 +37,7 @@
 
 </script>
 
-<body>
+<body class="has-drawer">
 <script>
 window.fbAsyncInit = function() {
 	FB.init({
@@ -77,11 +81,42 @@ window.fbAsyncInit = function() {
 
 </script>
 
+ <div id="drawerExample" class="drawer dw-xs-8 dw-sm-4 dw-md-2 fold" aria-labelledby="drawerExample">
+       <div class="drawer-controls">
+           <a href="#drawerExample" data-toggle="drawer" aria-foldedopen="false" aria-controls="drawerExample" class="btn btn-primary btn-sm"><span class='glyphicon glyphicon-user'></span></a>
+       </div>
+       <div class="drawer-contents">
+           <div id='userInfo' class="drawer-heading">
+               <img id='userInfoPic' class='img-circle'></img>
+               <h4 class="drawer-title" id='userInfoName'></h4>
+           </div>
+           <div class="drawer-body">
+              
+           </div>
+           <div class="drawer-heading">
+               <h4 class="drawer-title">관리중인 그룹</h4>
+           </div>
+           <ul class="drawer-nav" id='userInfoMgroup'>
+           </ul>
+           <div class="drawer-heading">
+               <h4 class="drawer-title">참여중인 그룹</h4>
+           </div>
+           <ul class="drawer-nav" id='userInfoJgroup'>
+           </ul>
+           <div class="drawer-footer">
+               <small>&copy; Moonday Lee</small>
+           </div>
+       </div>
+   </div>
+
+
+
+
 <div id="status">
-</div>
 <input type = 'hidden' id = 'userId' >
 <input type = 'hidden'  id = 'userName' >
 <input type = 'hidden'  id = 'picUrl' >
+</div>
 
 <header>
 	<div class='row' id='calTop'>

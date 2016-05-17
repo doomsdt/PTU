@@ -18,7 +18,8 @@ exports.route = function(app){
 	app.post('/updateGroup', group.update);
 	app.post('/removeGroup', group.remove);
 	
-	app.post('/listMember', member.list)
+	app.post('/listMember', member.list);
+	app.post('/listMemberGroups', member.groups);
 	app.post('/createMember', member.create);
 	app.post('/updateMember', member.update);
 };

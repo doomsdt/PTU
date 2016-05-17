@@ -2,11 +2,25 @@ var Group = require('../models/groups.js');
 
 exports.list = function(req, res){
 	var tmp;
-	Group.find({name: {$regex: req.body.groupName, $options: 'i'}},'name leader',function(err,groups){
-
-		tmp = JSON.stringify(groups);
-		res.send(tmp);
-	});
+	if(req.body.leaderId){	//find by leaderId
+		Group.find({leader : req.body.leaderId},'name',function(err,groups){
+			tmp = JSON.stringify(groups);
+			res.send(tmp);
+		});
+	}
+	else if(req.body.groups){
+		Group.find({_id : {$in : JSON.parse(req.body.groups)}},'name',function(err,groups){
+			tmp = JSON.stringify(groups);
+			res.send(tmp);
+		});
+	}
+	else{					//find by group search
+		Group.find({name: {$regex: req.body.groupName, $options: 'i'}},'name leader',function(err,groups){
+	
+			tmp = JSON.stringify(groups);
+			res.send(tmp);
+		});
+	}
 }
 
 exports.members = function(req, res){

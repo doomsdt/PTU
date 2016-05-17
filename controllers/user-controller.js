@@ -17,6 +17,13 @@ exports.list = function(req,res){
 	
 }
 
+exports.groups = function(req,res){
+	var tmp;
+	Member.find({_id:req.body.userId},'groups',function(err,arr){
+		tmp = JSON.stringify(arr);
+		res.send(tmp);
+	});
+}
 
 exports.create = function(req,res){
 	new Member({
