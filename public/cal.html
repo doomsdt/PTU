@@ -49,16 +49,16 @@ window.fbAsyncInit = function() {
 	});
 	
 	FB.getLoginStatus(function(response) {
-        if (response.status === 'connected') {
-            
+		console.log(response.status)
+        if (response.status === 'connected') {		//Facebook Login & App Login
+            $('fb:login-button').hide();
         	FB.api('/me?fields=name,picture,friends', function(response) {
-        	    $('#newGroupName').attr('name',response.name);
         	    $('#userId').attr('value',response.id);
         	    $('#userName').attr('value',response.name);
         	    $('#picUrl').attr('value',response.picture.url);
         	});
              
-        } else if (response.status === 'not_authorized') {
+        } else if (response.status === 'not_authorized') {		//Facebook Login & App Not
 
         } else {
             
