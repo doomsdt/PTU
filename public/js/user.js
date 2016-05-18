@@ -11,7 +11,7 @@ function setLogout(){
 }
 
 function signInWithFacebook(){
-	FB.api('/me?fields=name,picture,friends', function(res) {
+	FB.api('/me?fields=name,picture.width(800).height(800)', function(res) {
 		$('#userId').attr('value',res.id);
 	    $('#userName').attr('value',res.name);
 	    $('#picUrl').attr('value',res.picture.data.url);
