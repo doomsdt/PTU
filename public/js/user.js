@@ -23,7 +23,7 @@ function signInWithFacebook(){
 					$.ajax({
 						type: "POST",
 						url : "/createMember",
-						data : 'uid=' + fId + "&name=" + res.name + "&picUrl=" + res.picture.data.url,
+						data : 'uid=' + res.id + "&name=" + res.name + "&picUrl=" + res.picture.data.url,
 						success : function(){
 							alertSuccess("가입을 축하합니다!");
 						}
