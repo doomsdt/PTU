@@ -34,6 +34,7 @@ function signInWithFacebook(){
 			}
 		});	
 		setUserInfo();
+		UpdateDate(res.id);
 	});
 	
 }
