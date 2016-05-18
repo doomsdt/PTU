@@ -33,7 +33,7 @@ exports.members = function(req, res){
 }
 
 exports.create = function(req, res){
-	Group.insert({
+	connect.collection('groups').insert({
 		name: req.body.name,
 		leader: req.body.leader_id
 	},function(err,newDoc){
