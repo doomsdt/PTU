@@ -36,7 +36,9 @@ exports.create = function(req, res){
 	new Group({
 		name: req.body.name,
 		leader: req.body.leader_id
-	}).save();
+	}).save(function(err,newDoc){
+		return newDoc;
+	});
 	
 	res.end();
 }

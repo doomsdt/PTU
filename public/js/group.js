@@ -80,8 +80,9 @@ function setGroupAdd(){		//set NEW GROUP and MEMBER event
 			type: 'POST',
 			url: '/createGroup',
 			data: "name=" + $('#newGroupName').val() + "&leader_id=" + $('#userId').val(),
-			success: function(){
+			success: function(data){
 				alertSuccess("그룹을 생성하였습니다.");
+				console.log(data);
 			}
 		});
 	});
