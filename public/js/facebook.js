@@ -5,13 +5,15 @@ function statusChangeCallback(response) {
   // app know the current login status of the person.
   // Full docs on the response object can be found in the documentation
   // for FB.getLoginStatus().
-  $('#logoutButton').hide();
+  
   if (response.status === 'connected') {
     // Logged into your app and Facebook.
 	$('#loginButton').hide();
   	$('#logoutButton').show();
+  	$('#userPicName').show();
+  	
   	FB.api('/me?fields=name,picture,friends', function(res) {
-  		console.log(res);
+  		signInWithFacebook(res.id);
   	    $('#userId').attr('value',res.id);
   	    $('#userName').attr('value',res.name);
   	    $('#picUrl').attr('value',res.picture.data.url);
@@ -27,6 +29,7 @@ function statusChangeCallback(response) {
 	    $('#userName').attr('value','');
 	    $('#picUrl').attr('value','');
 	    setUserInfo();
+	    $('#userPicName').hide();
   }
 }
 

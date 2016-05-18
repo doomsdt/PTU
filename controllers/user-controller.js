@@ -17,6 +17,12 @@ exports.list = function(req,res){
 	
 }
 
+exports.exist = function(req,res){
+	Member.find({fId : req.body.fId}).count(function(err,num){
+		res.send(num);
+	});
+}
+
 exports.groups = function(req,res){
 	var tmp;
 	Member.find({_id:req.body.userId},'groups',function(err,arr){

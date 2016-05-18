@@ -53,6 +53,7 @@ function setTitle(year,month,startDay){		//switch week
 
 function initCalendar(year,month,startDay){
 	$('.alert').hide();
+	$('#logoutButton').hide();
 	setTitle(year,month,startDay);
 	initCal(year,month,startDay);
 	UpdateUser();

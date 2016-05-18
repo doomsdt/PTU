@@ -9,3 +9,15 @@ function setLogout(){
 		});
 	});
 }
+
+function signInWithFacebook(fId){
+	$.ajax({
+		type : "POST",
+		url : "/userIn",
+		data : "fId=" + fId,
+		success : function(data){
+			console.log(data);
+		}
+		
+	});
+}
