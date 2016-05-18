@@ -33,20 +33,16 @@ exports.members = function(req, res){
 }
 
 exports.create = function(req, res){
-	connect.collection('groups').insert({
-		name: req.body.name,
-		leader: req.body.leader_id
-	},function(err,newDoc){
-		return newDoc;
-	});
-	/*
+	
 	new Group({
 		name: req.body.name,
 		leader: req.body.leader_id
 	}).save(function(err,newDoc){
-		return newDoc;
+		var id = newDoc.id;
+		console.log(id);
+		return id;
 	});
-	*/
+	
 	res.end();
 }
 
