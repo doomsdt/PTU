@@ -54,6 +54,7 @@ function setTitle(year,month,startDay){		//switch week
 function initCalendar(year,month,startDay){
 	$('.alert').hide();
 	$('#logoutButton').hide();
+	$('#groupControl').hide();
 	setTitle(year,month,startDay);
 	initCal(year,month,startDay);
 	UpdateUser();
@@ -121,12 +122,16 @@ function UpdateDate(paramId){		//get TASK LIST and show
 					url: "/listGroup",
 					data: "members=" + JSON.stringify(m),
 					success : function(retu){
-						console.log(retu);
+						var _tmp = JSON.parse(retu);
+						var groupArr = [];
+						for(var key in _tmp)
+							groupArr.push(_tmp[key]._id);
+						
 						$.ajax({
 							type: "POST",
 							url: '/list',
 							data: "startDate=" + $('#addS0').val() + "&endDate=" + $('#addS6').val() +"&members=" + 
-							JSON.stringify(m) + "&group=" + paramId,
+							JSON.stringify(m) + "&groups=" + JSON.stringify(groupArr),
 							success: function(data){
 								var bef = 540;
 								var befDate, curDate;
@@ -135,7 +140,7 @@ function UpdateDate(paramId){		//get TASK LIST and show
 					
 								for(var i=0;i<_tmp.length;i++){
 									var curTask = _tmp[i];
-									if(curTask.user){
+									if(curTask.group!=paramId){
 										for(var j=1;i+j<_tmp.length;j++){
 											var nextTask = _tmp[i+j];
 											if(nextTask.user){

@@ -9,19 +9,18 @@ exports.route = function(app){
 	})
 	app.post('/list', task.list);
 	app.post('/createTask', task.create);
-	//app.post('/updateTask', task.update);
 	app.post('/removeTask', task.remove);
 	
 	app.post('/listGroup', group.list);
 	app.post('/listGroupMembers', group.members);
 	app.post('/createGroup', group.create);
-	app.post('/updateGroup', group.update);
-	app.post('/removeGroup', group.remove);
+	app.post('/updateGroup', group.update, member.update);
+	app.post('/quitGroup', group.quit, member.quit);
+	app.post('/removeGroup', task.remove, member.quit, group.remove);
 	
 	app.post('/listMember', member.list);
 	app.post('/listMemberGroups', member.groups);
 	app.post('/createMember', member.create);
-	app.post('/updateMember', member.update);
 	
 	app.post('/userIn', member.exist);
 };

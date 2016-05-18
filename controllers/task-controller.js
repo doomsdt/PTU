@@ -8,7 +8,7 @@ exports.list = function(req, res) {
 			res.send(tmp);
 		});
 	} else{
-		Task.find({date : {$gte:req.body.startDate, $lte:req.body.endDate}}).or([{group : req.body.group}, {user : {$in : JSON.parse(req.body.members)}}]).sort({date: 1, startTime: 1}).exec(function(err,tasks){
+		Task.find({date : {$gte:req.body.startDate, $lte:req.body.endDate}}).or([{group : {$in : JSON.parse(req.body.groups)}}, {user : {$in : JSON.parse(req.body.members)}}]).sort({date: 1, startTime: 1}).exec(function(err,tasks){
 			tmp = JSON.stringify(tasks);
 			res.send(tmp);
 		});
@@ -58,7 +58,7 @@ exports.update = function(req, res) {
 	res.end();
 };
 
-exports.remove = function(req,res) {
+exports.remove = function(req,res,next) {
 	if(req.body.user){
 		Task.remove({
 			user : req.body.user,
@@ -69,6 +69,15 @@ exports.remove = function(req,res) {
 			if(err)
 				throw err;
 		});
+		res.end();
+	} else if(req.body.groupId){
+		Task.remove({
+			group : req.body.groupId
+		}, function(err){
+			if(err)
+				throw err;
+		});
+		next();
 	}
 	
 	else{
@@ -81,7 +90,8 @@ exports.remove = function(req,res) {
 			if(err)
 				throw err;
 		});
+		res.end();
 	}
 
-	res.end();
+	
 };

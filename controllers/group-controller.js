@@ -50,24 +50,32 @@ exports.create = function(req, res){
 	
 }
 
-exports.update = function(req, res){
+exports.update = function(req, res, next){
 	Group.update(
-		{_id: req.body.id},
-		{$addToSet: {members: req.body.member_id}},
+		{_id: req.body.groupId},
+		{$addToSet: {members: req.body.memberId}},
+		function(err){}
+		
+	);
+	next();
+}
+
+exports.quit = function(req,res, next){
+	Group.update(
+		{_id: req.body.groupId},
+		{$pull: {members: req.body.memberId}},
 		function(err){}
 		
 	);
 	
-	res.end();
+	next();
 }
 
-exports.remove = function(req, res){
-	
+exports.remove = function(req, res, next){	
 	Group.remove(
 		{
-			name: req.body.name,
-			leader: req.body.leader
-		}
+			_id:req.body.groupId
+		},function(err){}
 	)
 	
 	res.end();

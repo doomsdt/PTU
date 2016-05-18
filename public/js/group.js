@@ -8,10 +8,12 @@ function initGroups(gName){		//get GROUP LIST and show
 		url: '/listGroup',
 		success: function(data){
 			var _tmp = JSON.parse(data);
+			$('#groupControl').hide();
+			$('#groupList').show();
 			$('#groupList div').remove();
 			$('#groupList br').remove();
 			
-			$('#groupList').append("<div class='glBox'><div class='glElement' id='glMine'><p class='glName'> 내 시간표 </p></div></div></br>");
+			$('#groupList').append("<div class='glBox'><div class='glElement btn btn-warning' id='glMine'><p class='glName'> 내 시간표 </p></div></div>");
 			
 			for(var key in _tmp){
 				var leader;
@@ -25,45 +27,113 @@ function initGroups(gName){		//get GROUP LIST and show
 					}
 				});
 				$('#groupList').append("<div class='glBox'><div class='btn btn-primary glElement' id="+ _tmp[key]._id +"><p class='glLeader'>"+leader
-						+"</p><p class='glName'>"+_tmp[key].name+"</p><p><a class='divLink'></a></p></div><input type='button' value='+' class='btn btn-sm glJoin'></div></br>");
+						+"</p><p class='glName'>"+_tmp[key].name+"</p><p><a class='divLink'></a></p></div><input type='button' value='+' class='btn btn-sm glJoin'></div>");
 
 			}
-		
-			$('.glElement').not('#glMine').on('click', function(err){
-				$('#topTitle').text($(this).find('p.glName').text());
-				$('#topTitle').attr('value',1);
-				UpdateDate($(this).attr('id'));
-			});
 			
-			$('#glMine').on('click', function(err){
-				$('#topTitle').text($(this).find('p.glName').text());
-				$('#topTitle').attr('value',0);
-				UpdateDate($('#userId').val());
-			});
+			setGroupSelect();
 
-			$('.glJoin').on('click',function(){
-				var groupId = $(this).siblings(".glElement").attr('id');
-				var memberId = $('#userId').val();
+		}
+	});
+}
+
+function setGroupSelect(){
+	$('.glElement').not('#glMine').unbind('click');
+	$('.glElement').not('#glMine').on('click', function(err){
+		$('#groupName').val($(this).find('p.glName').text());
+		$('#groupId').val($(this).attr('id'));
+		
+		$('#topTitle').text($('#groupName').val());
+		$('#topTitle').attr('value',1);
+		
+		UpdateDate($('#groupId').val());
+		$('#groupList').hide();
+		setGroupControl();
+	});
+	
+	$('#glMine').unbind('click');
+	$('#glMine').on('click', function(err){
+		$('#topTitle').text($(this).find('p.glName').text());
+		$('#topTitle').attr('value',0);
+		UpdateDate($('#userId').val());
+	});
+}
+
+function setGroupControl(){
+	var permission=0;
+	var groupId = $('#groupId').val();
+	var userId = $('#userId').val();
+	
+	$('#groupControl').show();
+	$('#groupJoin').hide();
+	$('#groupQuit').hide();
+	$('#groupDel').hide();
+	$('#groupControlName').text($('#groupName').val());
+	$.ajax({
+		type : "POST",
+		url : "/listGroupMembers",
+		data : "groupId=" + groupId,
+		success : function(data){
+			
+			var _tmp = JSON.parse(data);
+			if(_tmp[0].leader == userId)
+				permission=2;
+			else{
+				for(var key in _tmp[0].members){
+					if(_tmp[0].members[key] == userId)
+						permission=1;
+				}
+			}
+			if(permission==0)
+				$('#groupJoin').show();
+			else if(permission==1){
+				$('#groupQuit').show();
+			}else{
+				$('#groupDel').show();
+			}
+			$('#groupJoin').unbind('click');
+			$('#groupJoin').on('click',function(){
 				$.ajax({
 					type: 'POST',
 					url: '/updateGroup',
-					data: "id=" + groupId + "&member_id=" + memberId,
+					data: "groupId=" + groupId + "&memberId=" + userId,
 					success: function(){
-						$.ajax({
-							type: 'POST',
-							url: '/updateMember',
-							data: 'id=' + memberId + '&groupId=' + groupId,
-							success : function(){
-								
-							}
-						});
+					alertSuccess("그룹에 가입하였습니다!");
+					$('#groupJoin').hide();
+					$('#groupQuit').show();
 					}
+				});
+			});
+			$('#groupQuit').unbind('click');
+			$('#groupQuit').on('click',function(){
+				$.ajax({
+					type: 'POST',
+					url: '/quitGroup',
+					data: "groupId=" + groupId + "&memberId=" + userId,
+					success: function(){
+						alertWarning("그룹에서 탈퇴하였습니다!");
+						$('#groupJoin').show();
+						$('#groupQuit').hide();
+					}
+				});
+			});
+			$('#groupDel').unbind('click');
+			$('#groupDel').on('click',function(){
+				$.ajax({
+					type: 'POST',
+					url: '/removeGroup',
+					data: 'leader=' + userId + '&groupId=' + groupId,
+					success: function(){			
+						alertWarning("그룹을 삭제하였습니다!");
+						$('#groupDel').hide();
+						$('#topTitle').attr('value',0);
+						UpdateDate(userId);
+					}			
 				});
 			});
 		}
 	});
 }
-
 
 function setGroupFind(){
 	$('#groupFind').on('click', function(){
@@ -91,6 +161,7 @@ function setGroupAdd(){		//set NEW GROUP and MEMBER event
 						
 					}
 				});
+				
 			}
 		});
 	});

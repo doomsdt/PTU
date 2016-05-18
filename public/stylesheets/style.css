@@ -193,19 +193,15 @@ header{
 	float:left;
 }
 
-#groupList{	
-	
-}
-
 .glBox{
 	position:relative;
 	display:inline-block;
+	width:80%;
 }
 
 .glElement{
-	
-	float:left;
-	width:150px;
+
+	width:80%;
 	margin:10px;
 }
 

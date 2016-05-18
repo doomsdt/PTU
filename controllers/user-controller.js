@@ -47,11 +47,33 @@ exports.create = function(req,res){
 
 exports.update = function(req,res){
 	Member.update(
-			{uid: req.body.id},
+			{uid: req.body.memberId},
 			{$addToSet: {groups: req.body.groupId}},
 			function(err){}
 			
 		);
 		
 		res.end();
+}
+
+exports.quit = function(req,res,next){
+	if(req.body.memberId){
+		Member.update(
+			{uid: req.body.memberId},
+			{$pull: {groups: req.body.groupId}},
+			function(err){}
+			
+		);
+		res.end();
+	}
+	else{
+		Member.update(			
+				{},
+				{$pullAll: {groups: req.body.groupId}},
+				function(err){}				
+			);
+		next();
+	}
+		
+		
 }

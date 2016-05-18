@@ -45,8 +45,8 @@ function setUserInfo(){
 	$('#userInfoName').text($('#userName').attr('value'));
 	$('#userInfoPic').attr('src',$('#picUrl').attr('value'));
 	
-	$('#userInfoMgroup li').remove();
-	$('#userInfoJgroup li').remove();
+	$('#userInfoMgroup div').remove();
+	$('#userInfoJgroup div').remove();
 	
 	$.ajax({
 		type:"POST",
@@ -55,8 +55,8 @@ function setUserInfo(){
 		success:function(data){
 			var _tmp = JSON.parse(data);
 			for(var key in _tmp){
-				$('#userInfoMgroup').append("<li>"+_tmp[key].name+"</li>");
-			}
+				$('#userInfoMgroup').append("<div class='glElement btn btn-default' id=" + _tmp[key]._id +"><p class='glName'>"+_tmp[key].name+"</p></div>");
+			}			
 		}
 	});
 	
@@ -74,8 +74,9 @@ function setUserInfo(){
 					var _tmp = JSON.parse(ret);
 					for(var key in _tmp){
 						if(_tmp[key].leader != $('#userId').val())
-							$('#userInfoJgroup').append("<li>"+_tmp[key].name+"</li>");
+							$('#userInfoJgroup').append("<div class='glElement btn btn-default' id=" + _tmp[key]._id +"><p class='glName'>"+_tmp[key].name+"</p></div>");
 					}
+					setGroupSelect();
 				}
 			});
 		}

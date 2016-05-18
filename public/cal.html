@@ -31,7 +31,6 @@
 
 	$(document).ready(function(){
 		initCalendar(year,month,startDay);
-
 	});
 	
 	setGroupAdd();
@@ -120,6 +119,8 @@ window.fbAsyncInit = function() {
 <input type = 'hidden' id = 'userId' >
 <input type = 'hidden'  id = 'userName' >
 <input type = 'hidden'  id = 'picUrl' >
+<input type = 'hidden' id = 'groupId' >
+<input type = 'hidden'  id = 'groupName' >
 </div>
 
 <header>
@@ -132,7 +133,11 @@ window.fbAsyncInit = function() {
 	<div id = 'alertSpace'>
 		<div class="alert alert-success fade in">
 	    	<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-		    <strong>Success!</strong> <span></span>
+		    <span></span>
+	 	</div>
+	 	<div class="alert alert-warning fade in">
+	    	<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+		    <span></span>
 	 	</div>
 	</div>
 </header>
@@ -166,8 +171,6 @@ window.fbAsyncInit = function() {
 			<div id = 'tmp'>
 			<select id='tmpUserName'>
 			</select>
-			<input type = 'text' id = 'tmpNewUser' >
-			<input type = 'button' id = 'tmpNewUserSubmit' value = '새 멤버'>
 		
 			</div>
 			<div id = 'addSchd'>
@@ -201,6 +204,12 @@ window.fbAsyncInit = function() {
 			</form>
 			<div id = 'groupList'>
 			</div>	
+			<div id = 'groupControl'>
+				<p id = 'groupControlName'></p>
+				<input id='groupJoin' type='button' class='btn btn-danger' value='Join!'></input>
+				<input id='groupQuit' type='button' class='btn btn-danger' value='Quit!'></input>
+				<input id='groupDel' type='button' class='btn btn-danger' value='Delete!'></input>
+			</div>
 		</div>
 	</div>
 </div>
