@@ -36,7 +36,7 @@ exports.groups = function(req,res){
 exports.create = function(req,res){
 	console.log(req.body);
 	new Member({
-		_id : req.body._id,
+		uid : req.body.uid,
 		name : req.body.name,
 		pic : req.body.pics
 	},function(err){}).save();

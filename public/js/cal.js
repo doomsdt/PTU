@@ -57,7 +57,8 @@ function initCalendar(year,month,startDay){
 	setTitle(year,month,startDay);
 	initCal(year,month,startDay);
 	UpdateUser();
-	var paramId = $("#tmpUserName option[value="+$('#tmpUserName').val()+"]").attr('id');
+	var paramId = $('#userId').val();
+		//$("#tmpUserName option[value="+$('#tmpUserName').val()+"]").attr('id');
 	
 	UpdateDate(paramId);
 	setEvent();

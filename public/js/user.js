@@ -22,7 +22,7 @@ function signInWithFacebook(fId){
 					$.ajax({
 						type: "POST",
 						url : "/createMember",
-						data : '_id=' + fId + '&pic=' + res.picture.data.url + "&name=" + res.name,
+						data : 'uid=' + fId + "&name=" + res.name,
 						success : function(){
 							
 						}
