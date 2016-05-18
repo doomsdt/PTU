@@ -43,7 +43,6 @@ exports.create = function(req, res){
 		res.send(id);
 	});
 	
-	res.end();
 }
 
 exports.update = function(req, res){
