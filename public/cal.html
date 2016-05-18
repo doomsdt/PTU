@@ -50,7 +50,7 @@ window.fbAsyncInit = function() {
 	});
 	
 	FB.getLoginStatus(function(response) {
-		console.log(response.status)
+		console.log(response.status);
         if (response.status === 'connected') {		//Facebook Login & App Login
             $('#loginButton').hide();
         	$('#logoutButton').show();
@@ -93,7 +93,7 @@ window.fbAsyncInit = function() {
             	   <fb:login-button scope="public_profile,email" onlogin="checkLoginState();"></fb:login-button>
                </div>
                <div id='logoutButton'>
-            	   <input type='button' class='btn btn-primary'>Log out</input>
+            	   <input type='button' class='btn btn-primary' value='Log out'></input>
                </div>
                <img id='userInfoPic' class='img-circle'></img>
                <h4 class="drawer-title" id='userInfoName'></h4>

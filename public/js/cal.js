@@ -80,6 +80,7 @@ function setEvent(){	//set NEW TASK event
 	setGroupFind();
 	setGroupAdd();
 	setTaskAdd();
+	setLogout();
 
 	// Temporal
 	$('#tmpNewUserSubmit').on('click',function(){
