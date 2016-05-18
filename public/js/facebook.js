@@ -12,6 +12,7 @@ function statusChangeCallback(response) {
   	$('#logoutButton').show();
   	$('#userPicName').show();
   	signInWithFacebook();
+  	console.log(response.authResponse);
   	    
 
   } else {
