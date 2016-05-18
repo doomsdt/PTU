@@ -14,7 +14,7 @@ exports.list = function(req, res){
 			res.send(tmp);
 		});
 	}
-	else if(re.body.members){	//group member's group
+	else if(req.body.members){	//group member's group
 		Group.find({members : {$elemMatch : {$in :JSON.parse(req.body.members)}}},'_id',function(err,groups){
 			tmp = JSON.stringify(groups);
 			res.send(tmp);
