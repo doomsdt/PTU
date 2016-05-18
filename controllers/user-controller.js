@@ -34,13 +34,17 @@ exports.groups = function(req,res){
 }
 
 exports.create = function(req,res){
-	console.log(req.body);
-	new Member({
+	Member.insert({
+		_id : req.body.uid,
+		name : req.body.name,
+		pic : req.body.pics
+	});
+/*	new Member({
 		_id : req.body.uid,
 		name : req.body.name,
 		pic : req.body.pics
 	},function(err){}).save();
-	
+*/	
 	res.end();
 	
 }
