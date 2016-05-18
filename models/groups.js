@@ -3,8 +3,8 @@ var mongoose = require('mongoose'),
 
 var groupSchema = new Schema({
 	name: String,
-	leader: {type: Schema.Types.ObjectId, ref: 'Member'},
-	members: [{type: Schema.Types.ObjectId, ref: 'Member'}]
+	leader: {type: String},
+	members: [{type: String}]
 });
 
 module.exports = mongoose.model('Group', groupSchema);
