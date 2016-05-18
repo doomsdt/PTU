@@ -72,7 +72,8 @@ function setUserInfo(){
 				success:function(ret){
 					var _tmp = JSON.parse(ret);
 					for(var key in _tmp){
-						$('#userInfoJgroup').append("<li>"+_tmp[key].name+"</li>");
+						if(_tmp[key].leader != $('#userId').val())
+							$('#userInfoJgroup').append("<li>"+_tmp[key].name+"</li>");
 					}
 				}
 			});

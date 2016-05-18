@@ -59,7 +59,8 @@ function initCalendar(year,month,startDay){
 	UpdateUser();
 	var paramId = $('#userId').val();
 	
-	UpdateDate(paramId);
+	if($('#userId').val())
+		UpdateDate(paramId);
 	setEvent();
 	
 }
