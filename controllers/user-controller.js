@@ -38,7 +38,7 @@ exports.create = function(req,res){
 	new Member({
 		uid : req.body.uid,
 		name : req.body.name,
-		pic : req.body.pics
+		pic : req.body.picUrl
 	},function(err){}).save();
 	
 	res.end();

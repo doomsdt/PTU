@@ -11,14 +11,8 @@ function statusChangeCallback(response) {
 	$('#loginButton').hide();
   	$('#logoutButton').show();
   	$('#userPicName').show();
-  	
-  	FB.api('/me?fields=name,picture,friends', function(res) {
-  		signInWithFacebook(res.id);
-  	    $('#userId').attr('value',res.id);
-  	    $('#userName').attr('value',res.name);
-  	    $('#picUrl').attr('value',res.picture.data.url);
-  	    setUserInfo();
-  	});
+  	signInWithFacebook();
+  	    
 
   } else {
     // The person is not logged into Facebook, so we're not sure if
