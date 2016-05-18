@@ -27,7 +27,7 @@ exports.exist = function(req,res){
 
 exports.groups = function(req,res){
 	var tmp;
-	Member.find({_id:req.body.userId},'groups',function(err,arr){
+	Member.find({uid:req.body.userId},'groups',function(err,arr){
 		tmp = JSON.stringify(arr);
 		res.send(tmp);
 	});

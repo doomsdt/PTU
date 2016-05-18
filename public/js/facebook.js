@@ -22,7 +22,8 @@ function statusChangeCallback(response) {
 	  $('#userId').attr('value','');
 	    $('#userName').attr('value','');
 	    $('#picUrl').attr('value','');
-	    setUserInfo();
+	    $('#userInfoMgroup li').remove();
+		$('#userInfoJgroup li').remove();
 	    $('#userPicName').hide();
   }
 }
