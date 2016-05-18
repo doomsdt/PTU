@@ -28,12 +28,12 @@ function signInWithFacebook(){
 							alertSuccess("가입을 축하합니다!");
 						}
 					});							
-				}
-				$('#userId').attr('value',res.id);
-			    $('#userName').attr('value',res.name);
-			    $('#picUrl').attr('value',res.picture.data.url);
+				}				
 			}
 		});	
+		$('#userId').attr('value',res.id);
+	    $('#userName').attr('value',res.name);
+	    $('#picUrl').attr('value',res.picture.data.url);
 	});
 	setUserInfo();
 }
