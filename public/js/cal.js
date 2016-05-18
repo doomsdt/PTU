@@ -226,7 +226,6 @@ function UpdateUser(){
 			_tmp = JSON.parse(data);
 			for(var key in _tmp){
 				$('#tmpUserName').append($('<option>', {
-					value : _tmp[key].pic,
 					text : _tmp[key].name,
 					id : _tmp[key].uid
 				}));
