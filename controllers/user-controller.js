@@ -18,8 +18,11 @@ exports.list = function(req,res){
 }
 
 exports.exist = function(req,res){
+	console.log('exist run');
+	var tmp;
 	Member.find({fId : req.body.fId}).count(function(err,num){
-		res.send(num);
+		tmp = JSON.stringify(num);
+		res.send(tmp);
 	});
 }
 
