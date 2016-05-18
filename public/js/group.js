@@ -82,7 +82,15 @@ function setGroupAdd(){		//set NEW GROUP and MEMBER event
 			data: "name=" + $('#newGroupName').val() + "&leader_id=" + $('#userId').val(),
 			complete: function(data){
 				alertSuccess("그룹을 생성하였습니다.");
-				console.log(data);
+				var gId = data.responseText;
+				$.ajax({
+					type: 'POST',
+					url: '/updateMember',
+					data: 'id=' + $('#userId').val() + '&groupId=' + gId,
+					success : function(){
+						
+					}
+				});
 			}
 		});
 	});
