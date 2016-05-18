@@ -19,7 +19,7 @@ exports.list = function(req,res){
 
 exports.exist = function(req,res){
 	var tmp;
-	Member.find({fId : req.body.fId}).count(function(err,num){
+	Member.find({uid : req.body.fId}).count(function(err,num){
 		tmp = JSON.stringify(num);
 		res.send(tmp);
 	});
