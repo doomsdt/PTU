@@ -51,14 +51,7 @@ window.fbAsyncInit = function() {
 	
 	FB.getLoginStatus(function(response) {	
         if (response.status === 'connected') {		//Facebook Login & App Login
-            $('#loginButton').hide();
-        	$('#logoutButton').show();
-        	FB.api('/me?fields=name,picture,friends', function(response) {
-        		console.log(response);
-        	    $('#userId').attr('value',response.id);
-        	    $('#userName').attr('value',response.name);
-        	    $('#picUrl').attr('value',response.picture.url);
-        	});
+            
              
         } else if (response.status === 'not_authorized') {		//Facebook Login & App Not
 
