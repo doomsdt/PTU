@@ -3,7 +3,7 @@ var Member = require('../models/users.js');
 exports.list = function(req,res){
 	var tmp;
 	if(req.body.id){
-		Member.find({_id:req.body.id}).exec(function(err,members){
+		Member.find({uid:req.body.id}).exec(function(err,members){
 			tmp = JSON.stringify(members);
 			res.send(tmp);
 		});
@@ -47,7 +47,7 @@ exports.create = function(req,res){
 
 exports.update = function(req,res){
 	Member.update(
-			{_id: req.body.id},
+			{uid: req.body.id},
 			{$addToSet: {groups: req.body.groupId}},
 			function(err){}
 			

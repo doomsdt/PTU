@@ -21,7 +21,6 @@ function signInWithFacebook(){
 			url : "/userIn",
 			data : "fId=" + res.id,
 			success : function(data){
-				console.log(data);
 				if(data==0){				
 					$.ajax({
 						type: "POST",

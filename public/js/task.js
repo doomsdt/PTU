@@ -7,7 +7,7 @@ function setTaskAdd(){
 		var cont = $('#addScont').val();
 
 		if($('#topTitle').attr('value')==0)	{	
-			paramId = $("#tmpUserName option[value="+$('#tmpUserName').val()+"]").attr('id');
+			paramId = $('#userId').val();
 			var formData = "date=" + $('#addSdate').val() + "&startTime=" + st + "&endTime=" + ed + "&contents=" + cont + 
 							"&user=" + paramId;
 		}

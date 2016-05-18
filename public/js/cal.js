@@ -58,7 +58,6 @@ function initCalendar(year,month,startDay){
 	initCal(year,month,startDay);
 	UpdateUser();
 	var paramId = $('#userId').val();
-		//$("#tmpUserName option[value="+$('#tmpUserName').val()+"]").attr('id');
 	
 	UpdateDate(paramId);
 	setEvent();
@@ -69,7 +68,7 @@ function resetCalendar(year,month,startDay){	//reset all
 	setTitle(year,month,startDay);
 	initCal(year,month,startDay);
 	if($('#topTitle').attr('value')==0)
-		var paramId = $("#tmpUserName option[value="+$('#tmpUserName').val()+"]").attr('id');
+		var paramId = $('#userId').val();
 	else
 		var paramId = $(".glName").filter(function(){ return $(this).text() == $('#topTitle').text() }).parent().attr('id');
 	
@@ -98,7 +97,8 @@ function setEvent(){	//set NEW TASK event
 	
 	$('#tmpUserName').change(function(){
 		$('#userId').val($("#tmpUserName option[value="+$('#tmpUserName').val()+"]").attr('id'));
-		$('#userName').val($('#tmpUserName').val());
+		$('#userName').val($("#tmpUserName option[value="+$('#tmpUserName').val()+"]").text());
+		$('#picUrl').val($("#tmpUserName option[value="+$('#tmpUserName').val()+"]").attr('value'));
 		setUserInfo();
 		
 	});
@@ -226,9 +226,9 @@ function UpdateUser(){
 			_tmp = JSON.parse(data);
 			for(var key in _tmp){
 				$('#tmpUserName').append($('<option>', {
-					value : _tmp[key].name,
+					value : _tmp[key].pic,
 					text : _tmp[key].name,
-					id : _tmp[key]._id
+					id : _tmp[key].uid
 				}));
 			}
 		}

@@ -21,7 +21,6 @@ function initGroups(gName){		//get GROUP LIST and show
 					data: 'id=' + _tmp[key].leader,
 					async: false,
 					success: function(ret){
-						console.log(ret);
 						leader = JSON.parse(ret)[0].name;
 					}
 				});
@@ -39,12 +38,12 @@ function initGroups(gName){		//get GROUP LIST and show
 			$('#glMine').on('click', function(err){
 				$('#topTitle').text($(this).find('p.glName').text());
 				$('#topTitle').attr('value',0);
-				UpdateDate($("#tmpUserName option[value="+$('#tmpUserName').val()+"]").attr('id'));
+				UpdateDate($('#userId').val());
 			});
 
 			$('.glJoin').on('click',function(){
 				var groupId = $(this).siblings(".glElement").attr('id');
-				var memberId = $("#tmpUserName option[value="+$('#tmpUserName').val()+"]").attr('id');
+				var memberId = $('#userId').val();
 				$.ajax({
 					type: 'POST',
 					url: '/updateGroup',
