@@ -49,12 +49,12 @@ window.fbAsyncInit = function() {
 	  version    : 'v2.5' // use version 2.2
 	});
 	
-	FB.getLoginStatus(function(response) {
-		console.log(response.status);
+	FB.getLoginStatus(function(response) {	
         if (response.status === 'connected') {		//Facebook Login & App Login
             $('#loginButton').hide();
         	$('#logoutButton').show();
         	FB.api('/me?fields=name,picture,friends', function(response) {
+        		console.log(response);
         	    $('#userId').attr('value',response.id);
         	    $('#userName').attr('value',response.name);
         	    $('#picUrl').attr('value',response.picture.url);
