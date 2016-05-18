@@ -21,6 +21,7 @@ function initGroups(gName){		//get GROUP LIST and show
 					data: 'id=' + _tmp[key].leader,
 					async: false,
 					success: function(ret){
+						console.log(ret);
 						leader = JSON.parse(ret)[0].name;
 					}
 				});
