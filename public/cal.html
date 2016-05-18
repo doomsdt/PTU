@@ -11,6 +11,7 @@
 <script src="js/facebook.js"></script>
 <script src="js/group.js"></script>
 <script src="js/task.js"></script>
+<script src="js/userInfo.js"></script>
 <script src="/js/drawer.min.js"></script>
 <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
@@ -52,6 +53,7 @@ window.fbAsyncInit = function() {
 		console.log(response.status)
         if (response.status === 'connected') {		//Facebook Login & App Login
             $('#loginButton').hide();
+        	$('#logoutButton').show();
         	FB.api('/me?fields=name,picture,friends', function(response) {
         	    $('#userId').attr('value',response.id);
         	    $('#userName').attr('value',response.name);
@@ -89,6 +91,9 @@ window.fbAsyncInit = function() {
            <div id='userInfo' class="drawer-heading">
                <div id='loginButton'>
             	   <fb:login-button scope="public_profile,email" onlogin="checkLoginState();"></fb:login-button>
+               </div>
+               <div id='logoutButton'>
+            	   <input type='button' class='btn btn-primary'>Log out</input>
                </div>
                <img id='userInfoPic' class='img-circle'></img>
                <h4 class="drawer-title" id='userInfoName'></h4>
