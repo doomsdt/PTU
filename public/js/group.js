@@ -79,7 +79,7 @@ function setGroupAdd(){		//set NEW GROUP and MEMBER event
 		$.ajax({
 			type: 'POST',
 			url: '/createGroup',
-			data: "name=" + $('#userName').val() + "&leader_id=" + $('#userId').val(),
+			data: "name=" + $('#newGroupName').val() + "&leader_id=" + $('#userId').val(),
 			success: function(){
 				alertSuccess("그룹을 생성하였습니다.");
 			}
