@@ -5,6 +5,7 @@ function statusChangeCallback(response) {
   // app know the current login status of the person.
   // Full docs on the response object can be found in the documentation
   // for FB.getLoginStatus().
+  $('#logoutButton input').hide();
   if (response.status === 'connected') {
     // Logged into your app and Facebook.
 	$('#loginButton').hide();
@@ -13,7 +14,8 @@ function statusChangeCallback(response) {
   		console.log(res);
   	    $('#userId').attr('value',res.id);
   	    $('#userName').attr('value',res.name);
-  	    $('#picUrl').attr('value',res.picture.url);
+  	    $('#picUrl').attr('value',res.picture.data.url);
+  	    setUserInfo();
   	});
 
   } else if (response.status === 'not_authorized') {
