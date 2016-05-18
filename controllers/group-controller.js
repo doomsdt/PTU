@@ -40,7 +40,7 @@ exports.create = function(req, res){
 	}).save(function(err,newDoc){
 		var id = newDoc.id;
 		console.log(id);
-		return id;
+		res.send(id);
 	});
 	
 	res.end();
