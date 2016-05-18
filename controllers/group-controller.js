@@ -9,7 +9,7 @@ exports.list = function(req, res){
 		});
 	}
 	else if(req.body.groups){
-		Group.find({_id : {$in : JSON.parse(req.body.groups)}},'name',function(err,groups){
+		Group.find({_id : {$in : JSON.parse(req.body.groups)}},'name leader',function(err,groups){
 			tmp = JSON.stringify(groups);
 			res.send(tmp);
 		});
@@ -39,7 +39,6 @@ exports.create = function(req, res){
 		leader: req.body.leader_id
 	}).save(function(err,newDoc){
 		var id = newDoc.id;
-		console.log(id);
 		res.send(id);
 	});
 	

@@ -99,7 +99,6 @@ function setEvent(){	//set NEW TASK event
 	$('#tmpUserName').change(function(){
 		$('#userId').val($("#tmpUserName option[value="+$('#tmpUserName').val()+"]").attr('id'));
 		$('#userName').val($("#tmpUserName option[value="+$('#tmpUserName').val()+"]").text());
-		$('#picUrl').val($("#tmpUserName option[value="+$('#tmpUserName').val()+"]").attr('value'));
 		setUserInfo();
 		
 	});
