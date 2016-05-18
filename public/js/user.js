@@ -14,7 +14,7 @@ function signInWithFacebook(fId){
 	$.ajax({
 		type : "POST",
 		url : "/userIn",
-		data : "fId=" + fId,
+		data : "uId=" + fId,
 		success : function(data){
 			console.log(data);
 			if(data==0){
@@ -24,7 +24,7 @@ function signInWithFacebook(fId){
 						url : "/createMember",
 						data : 'uid=' + fId + "&name=" + res.name,
 						success : function(){
-							
+							alertSuccess("가입을 축하합니다!");
 						}
 					});
 				});				
