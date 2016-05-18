@@ -51,7 +51,7 @@ window.fbAsyncInit = function() {
 	FB.getLoginStatus(function(response) {
 		console.log(response.status)
         if (response.status === 'connected') {		//Facebook Login & App Login
-            $('fb:login-button').hide();
+            $('#loginButton').hide();
         	FB.api('/me?fields=name,picture,friends', function(response) {
         	    $('#userId').attr('value',response.id);
         	    $('#userName').attr('value',response.name);
@@ -87,7 +87,9 @@ window.fbAsyncInit = function() {
        </div>
        <div class="drawer-contents">
            <div id='userInfo' class="drawer-heading">
-               <fb:login-button scope="public_profile,email" onlogin="checkLoginState();"></fb:login-button>
+               <div id='loginButton'>
+            	   <fb:login-button scope="public_profile,email" onlogin="checkLoginState();"></fb:login-button>
+               </div>
                <img id='userInfoPic' class='img-circle'></img>
                <h4 class="drawer-title" id='userInfoName'></h4>
            </div>
