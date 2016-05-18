@@ -37,15 +37,13 @@ function signInWithFacebook(){
 		
 	});
 	setUserInfo();
-	console.log('sUI call');
 }
 
 
 function setUserInfo(){
-	console.log('setUserInfo run');
 	//$('#picUrl').val("https://scontent.xx.fbcdn.net/v/t1.0-1/p160x160/11218871_791961790922545_8076800936888519048_n.jpg?oh=58408a125b2f882969f1e964678913c4&oe=57E0AE45");
-	$('#userInfoName').text($('#userName').val());
-	$('#userInfoPic').attr('src',$('#picUrl').val());
+	$('#userInfoName').text($('#userName').attr('value'));
+	$('#userInfoPic').attr('src',$('#picUrl').attr('value'));
 	
 	$('#userInfoMgroup li').remove();
 	$('#userInfoJgroup li').remove();
