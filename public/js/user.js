@@ -12,6 +12,9 @@ function setLogout(){
 
 function signInWithFacebook(){
 	FB.api('/me?fields=name,picture,friends', function(res) {
+		$('#userId').attr('value',res.id);
+	    $('#userName').attr('value',res.name);
+	    $('#picUrl').attr('value',res.picture.data.url);
 		
 		$.ajax({
 			type : "POST",
@@ -31,9 +34,7 @@ function signInWithFacebook(){
 				}				
 			}
 		});	
-		$('#userId').attr('value',res.id);
-	    $('#userName').attr('value',res.name);
-	    $('#picUrl').attr('value',res.picture.data.url);
+		
 	});
 	setUserInfo();
 }
