@@ -17,6 +17,18 @@ function signInWithFacebook(fId){
 		data : "fId=" + fId,
 		success : function(data){
 			console.log(data);
+			if(data==0){
+				FB.api('/me?fields=name,picture,friends', function(res) {
+					$.ajax({
+						type: "POST",
+						url : "/createMember",
+						data : "_id=" + fId + "&pic=" + res.picture.data.url + "&name=" + res.name,
+						success : function(){
+							
+						}
+					});
+				});				
+			}
 		}
 		
 	});
