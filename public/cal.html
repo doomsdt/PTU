@@ -87,6 +87,7 @@ window.fbAsyncInit = function() {
        </div>
        <div class="drawer-contents">
            <div id='userInfo' class="drawer-heading">
+               <fb:login-button scope="public_profile,email" onlogin="checkLoginState();"></fb:login-button>
                <img id='userInfoPic' class='img-circle'></img>
                <h4 class="drawer-title" id='userInfoName'></h4>
            </div>
@@ -134,9 +135,7 @@ window.fbAsyncInit = function() {
 </header>
 
 <div id='page'>
-<!--  
-<fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
-</fb:login-button>-->
+
 	<div class='row'>
 		<div id = 'main'>		
 			<div id = 'cal' class='row'>
