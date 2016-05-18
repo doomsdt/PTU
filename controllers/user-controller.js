@@ -18,7 +18,7 @@ exports.list = function(req,res){
 }
 
 exports.exist = function(req,res){
-	console.log('exist run');
+	console.log('exist run : ');
 	var tmp;
 	Member.find({fId : req.body.fId}).count(function(err,num){
 		tmp = JSON.stringify(num);
@@ -36,8 +36,9 @@ exports.groups = function(req,res){
 
 exports.create = function(req,res){
 	new Member({
+		_id : req.body._id,
 		name : req.body.name,
-		
+		pic : req.body.pic
 	},function(err){}).save();
 	
 	res.end();
