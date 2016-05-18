@@ -5,6 +5,7 @@ function setLogout(){
 		FB.logout(function(response){
 			$('#logoutButton').hide();
 			$('#loginButton').show();
+			statusChangeCallback(response);
 		});
 	});
 }
