@@ -118,54 +118,63 @@ function UpdateDate(paramId){		//get TASK LIST and show
 				m.push(JSON.parse(ret)[0].leader);
 				$.ajax({
 					type: "POST",
-					url: '/list',
-					data: "startDate=" + $('#addS0').val() + "&endDate=" + $('#addS6').val() +"&members=" + 
-					JSON.stringify(m) + "&group=" + paramId,
-					success: function(data){
-						var bef = 540;
-						var befDate, curDate;
-						var _tmp = JSON.parse(data);
-						$('.calDayCol div').remove();
-			
-						for(var i=0;i<_tmp.length;i++){
-							var curTask = _tmp[i];
-							if(curTask.user){
-								for(var j=1;i+j<_tmp.length;j++){
-									var nextTask = _tmp[i+j];
-									if(nextTask.user){
-										if(curTask.date == nextTask.date && curTask.endTime >= nextTask.startTime){
-											curTask.endTime = nextTask.endTime;
-											i++;
+					url: "/listGroup",
+					data: "members=" + JSON.stringify(m),
+					success : function(retu){
+						console.log(retu);
+						$.ajax({
+							type: "POST",
+							url: '/list',
+							data: "startDate=" + $('#addS0').val() + "&endDate=" + $('#addS6').val() +"&members=" + 
+							JSON.stringify(m) + "&group=" + paramId,
+							success: function(data){
+								var bef = 540;
+								var befDate, curDate;
+								var _tmp = JSON.parse(data);
+								$('.calDayCol div').remove();
+					
+								for(var i=0;i<_tmp.length;i++){
+									var curTask = _tmp[i];
+									if(curTask.user){
+										for(var j=1;i+j<_tmp.length;j++){
+											var nextTask = _tmp[i+j];
+											if(nextTask.user){
+												if(curTask.date == nextTask.date && curTask.endTime >= nextTask.startTime){
+													curTask.endTime = nextTask.endTime;
+													i++;
+												}
+											}
 										}
 									}
+									curDate = curTask.date;
+									if(curDate != befDate) bef = 540;
+									var st = Number(curTask.startTime.slice(0,2))*60 + Number(curTask.startTime.slice(2,4));
+									var ed = Number(curTask.endTime.slice(0,2))*60 + Number(curTask.endTime.slice(2,4));
+									var date = new Date(curTask.date.slice(0,4) + '-' + curTask.date.slice(4,6) + '-' + curTask.date.slice(6,8));
+									if(curTask.date>=$('#addS0').val() && curTask.date<=$('#addS6').val()){
+										var t = $("<div class='task box_center' id=" + curTask.date +'' + curTask.startTime + 
+												"><span class='taskCon'></span></div>");
+										
+										if(curTask.group==paramId){
+											$(t).append("<a href='#' class='close taskDel' aria-label='close'>&times;</a>");
+											$(t).find('.taskCon').text(curTask.contents);
+											$(t).css("background-color","#CC3D3D");
+										}
+										
+										$('#calMain_day'+date.getDay()).append(t);
+										$(t).css("margin-top", st-bef+"px").css("height", ed-st-2+"px");
+																						
+										bef = ed;
+									}
+									befDate = _tmp[i].date;
 								}
+								setTaskDel(paramId);
 							}
-							curDate = curTask.date;
-							if(curDate != befDate) bef = 540;
-							var st = Number(curTask.startTime.slice(0,2))*60 + Number(curTask.startTime.slice(2,4));
-							var ed = Number(curTask.endTime.slice(0,2))*60 + Number(curTask.endTime.slice(2,4));
-							var date = new Date(curTask.date.slice(0,4) + '-' + curTask.date.slice(4,6) + '-' + curTask.date.slice(6,8));
-							if(curTask.date>=$('#addS0').val() && curTask.date<=$('#addS6').val()){
-								var t = $("<div class='task box_center' id=" + curTask.date +'' + curTask.startTime + 
-										"><span class='taskCon'></span></div>");
-								
-								if(curTask.group){
-									$(t).append("<a href='#' class='close taskDel' aria-label='close'>&times;</a>");
-									$(t).find('.taskCon').text(curTask.contents);
-									$(t).css("background-color","#CC3D3D");
-								}
-								
-								$('#calMain_day'+date.getDay()).append(t);
-								$(t).css("margin-top", st-bef+"px").css("height", ed-st-2+"px");
-																				
-								bef = ed;
-							}
-							befDate = _tmp[i].date;
-						}
-						setTaskDel(paramId);
+						
+						});
 					}
+				});
 				
-				})
 			}
 		});
 	}
