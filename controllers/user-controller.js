@@ -67,10 +67,13 @@ exports.quit = function(req,res,next){
 		res.end();
 	}
 	else{
+		console.log('member');
 		Member.update(			
 				{},
-				{$pullAll: {groups: req.body.groupId}},
-				function(err){}				
+				{$pullAll: {groups: [req.body.groupId]}},{multi:true},
+				function(err){
+					if(err) console.log(err);
+				}				
 			);
 		next();
 	}

@@ -136,6 +136,7 @@ function setGroupControl(){
 }
 
 function setGroupFind(){
+	$('#groupFind').unbind('click');
 	$('#groupFind').on('click', function(){
 		if(!($('#groupFindName').text())){
 			initGroups($('#groupFindName').val());
@@ -144,19 +145,20 @@ function setGroupFind(){
 }
 
 function setGroupAdd(){		//set NEW GROUP and MEMBER event
+	$('#newGroupSubmit').unbind('click');
 	$('#newGroupSubmit').on('click',function(){
 
 		$.ajax({
 			type: 'POST',
 			url: '/createGroup',
-			data: "name=" + $('#newGroupName').val() + "&leader_id=" + $('#userId').val(),
+			data: "name=" + $('#newGroupName').val() + "&leaderId=" + $('#userId').val(),
 			complete: function(data){
 				alertSuccess("그룹을 생성하였습니다.");
 				var gId = data.responseText;
 				$.ajax({
 					type: 'POST',
 					url: '/updateMember',
-					data: 'id=' + $('#userId').val() + '&groupId=' + gId,
+					data: 'memberId=' + $('#userId').val() + '&groupId=' + gId,
 					success : function(){
 						
 					}

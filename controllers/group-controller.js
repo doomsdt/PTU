@@ -42,7 +42,7 @@ exports.create = function(req, res){
 	
 	new Group({
 		name: req.body.name,
-		leader: req.body.leader_id
+		leader: req.body.leaderId
 	}).save(function(err,newDoc){
 		var id = newDoc.id;
 		res.send(id);

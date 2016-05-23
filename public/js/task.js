@@ -1,4 +1,5 @@
 function setTaskAdd(){
+	$('#addSsubmit').unbind('click');
 	$('#addSsubmit').on('click', function(){
 		var paramId;
 		
@@ -32,6 +33,7 @@ function setTaskAdd(){
 }
 
 function setTaskDel(id){
+	$('.taskDel').unbind('click');
 	$('.taskDel').on('click', function(){
 		ajaxData = "contents=" + $(this).parent().find('.taskCon').text() + "&date=" + $(this).parent().attr('id').slice(0,8) + "&startTime=" + $(this).parent().attr('id').slice(8,12);
 
@@ -48,9 +50,6 @@ function setTaskDel(id){
 			
 			,success: function(){
 				$(this).parent().remove();
-				if($('#topTitle').attr('value')==0)
-					UpdateDate(id);
-				else
 					UpdateDate(id);
 			}
 		});

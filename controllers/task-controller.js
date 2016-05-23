@@ -71,11 +71,13 @@ exports.remove = function(req,res,next) {
 		});
 		res.end();
 	} else if(req.body.groupId){
+		console.log('task');
 		Task.remove({
 			group : req.body.groupId
-		}, function(err){
+		}, 
+		function(err){
 			if(err)
-				throw err;
+				console.log(err);
 		});
 		next();
 	}

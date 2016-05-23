@@ -1,6 +1,6 @@
 
 function setLogout(){
-	
+	$('#logoutButton input').unbind('click');
 	$('#logoutButton input').on('click',function(){
 		FB.logout(function(response){
 			$('#logoutButton').hide();

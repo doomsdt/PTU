@@ -11,9 +11,7 @@ function statusChangeCallback(response) {
 	$('#loginButton').hide();
   	$('#logoutButton').show();
   	$('#userPicName').show();
-  	signInWithFacebook();
-  	console.log(response.authResponse);
-  	    
+  	signInWithFacebook();  	    
 
   } else {
     // The person is not logged into Facebook, so we're not sure if
