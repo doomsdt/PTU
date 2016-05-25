@@ -108,7 +108,6 @@ function setEvent(){	//set NEW TASK event
 
 
 function UpdateDate(paramId){		//get TASK LIST and show
-
 	if($('#topTitle').attr('value')==1){
 		$.ajax({
 			type: "POST",

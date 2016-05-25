@@ -188,7 +188,44 @@ window.fbAsyncInit = function() {
 					<input type = 'textarea' class = form-control id = addScont rows='2' placeholder='일정을 입력하세요...'>
 					</div>
 					<input type = 'button' id = addSsubmit class='btn btn-primary' value='새 일정'>
+					<input type = 'button' id = addSrepeat class='btn btn-primary' data-toggle='modal' data-target='#repeatMenu' value='반복하기'>		
 				</form>
+				
+				<div class="modal fade" id="repeatMenu" role="dialog">
+				    <div class="modal-dialog">
+				    
+				      <!-- Modal content-->
+				      <div class="modal-content">
+				        <div class="modal-header">
+				          <button type="button" class="close" data-dismiss="modal">&times;</button>
+				          <h4 class="modal-title">일정 반복하기</h4>
+				        </div>
+				        <div class="modal-body">
+					        <ul class="nav nav-pills nav-justified">
+								<li class="active"><a data-toggle="pill" href="#repeatDay">일</a></li>
+								<li><a data-toggle="pill" href="#repeatWeek">주</a></li>
+							</ul>
+							
+							<div class="tab-content">
+								<div id="repeatDay" class="tab-pane fade in active">
+									<input type="number" id="repeatDayNum" name="quantity" min="1" max="10">
+									일 마다
+								</div>
+								<div id="repeatWeek" class="tab-pane fade">
+									<input type="number" id="repeatWeekNum" name="quantity" min="1" max="5">
+									주 마다
+								</div>
+							</div>				
+							종료일
+				        </div>
+				        <div class="modal-footer">
+				        	<button type="button" class="btn btn-default" data-dismiss="modal">확인</button>
+				        	<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+				        </div>
+				      </div>
+				      
+				    </div>
+				  </div>
 			</div>
 			<form class = 'form-inline'>
 				<div class='form-group'>

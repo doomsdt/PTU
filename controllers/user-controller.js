@@ -67,7 +67,6 @@ exports.quit = function(req,res,next){
 		res.end();
 	}
 	else{
-		console.log('member');
 		Member.update(			
 				{},
 				{$pullAll: {groups: [req.body.groupId]}},{multi:true},

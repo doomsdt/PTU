@@ -15,14 +15,13 @@ exports.list = function(req, res){
 		});
 	}
 	else if(req.body.members){	//group member's group
-		Group.find({members : {$elemMatch : {$in :JSON.parse(req.body.members)}}},'_id',function(err,groups){
+		Group.find({},'_id').or([{members : {$elemMatch : {$in :JSON.parse(req.body.members)}}},{leader : {$in :JSON.parse(req.body.members)}}]).exec(function(err,groups){
 			tmp = JSON.stringify(groups);
 			res.send(tmp);
 		});
 	}
 	else{					//find by group search
 		Group.find({name: {$regex: req.body.groupName, $options: 'i'}},'name leader',function(err,groups){
-	
 			tmp = JSON.stringify(groups);
 			res.send(tmp);
 		});
