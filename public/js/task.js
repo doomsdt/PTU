@@ -6,18 +6,23 @@ function setTaskAdd(){
 		var st = get_number_str($('#addSstH').val()) + "" + get_number_str($('#addSstM').val());
 		var ed = get_number_str($('#addSedH').val()) + "" + get_number_str($('#addSedM').val());
 		var cont = $('#addScont').val();
+		var d = new Date();
+		var formData = "date=" + $('#addSdate').val() + "&startTime=" + st + "&endTime=" + ed + "&contents=" + cont + "&tmp=" + d;
 
 		if($('#topTitle').attr('value')==0)	{	
 			paramId = $('#userId').val();
-			var formData = "date=" + $('#addSdate').val() + "&startTime=" + st + "&endTime=" + ed + "&contents=" + cont + 
-							"&user=" + paramId;
+			formData += "&user=" + paramId;
 		}
 		
 		else {		
 			paramId = $(".glName").filter(function(){ return $(this).text() == $('#topTitle').text() }).parent().attr('id');
-			var formData = "date=" + $('#addSdate').val() + "&startTime=" + st + "&endTime=" + ed + "&contents=" + cont + 
-							"&group=" + paramId;	
+			formData += "&group=" + paramId;
 		}
+		
+		
+		
+		if($('#repeatValue').val()!=0)
+			formData += "&repeatValue=" + $('#repeatValue').val();
 		
 		$.ajax({
 			type: "POST",
@@ -32,7 +37,7 @@ function setTaskAdd(){
 	});
 }
 
-function setTaskDel(id){
+function setTaskDel(id){	//change to individual
 	$('.taskDel').unbind('click');
 	$('.taskDel').on('click', function(){
 		ajaxData = "contents=" + $(this).parent().find('.taskCon').text() + "&date=" + $(this).parent().attr('id').slice(0,8) + "&startTime=" + $(this).parent().attr('id').slice(8,12);
@@ -54,5 +59,46 @@ function setTaskDel(id){
 			}
 		});
 		
+	});
+}
+
+function setRepeat(){
+	var ret = 0;
+	$('#addSrepeat').unbind('click');
+	$('#addSrepeat').on('click',function(){
+		$('#repeatIsDay').unbind('click');
+		$('#repeatIsDay').on('click', function(){
+			ret=0;
+			$('#repeatDayNum').val(0);
+			});
+		
+		$('#repeatIsWeek').unbind('click');
+		$('#repeatIsWeek').on('click', function(){
+			ret=10;
+			$('#repeatWeekNum').val(0);
+			});
+	});
+	
+	$('#repeatSubmit').unbind('click');
+	$('#repeatSubmit').on('click',function(){
+		if(ret==0)
+			ret+=Number($('#repeatDayNum').val());
+		else
+			ret+=Number($('#repeatWeekNum').val());
+		$('#repeatValue').val(ret);
+		$('#addSrepeat').hide();
+		$('#addSrepeatCancel').show();
+	});
+	
+	$('#repeatCancel').unbind('click');
+	$('#repeatCancel').on('click', function(){
+		$('#repeatValue').val(0);
+	});
+	
+	$('#addSrepeatCancel').unbind('click');
+	$('#addSrepeatCancel').on('click', function(){
+		$('#repeatValue').val(0);
+		$('#addSrepeat').show();
+		$('#addSrepeatCancel').hide();
 	});
 }

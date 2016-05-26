@@ -55,6 +55,7 @@ function initCalendar(year,month,startDay){
 	$('.alert').hide();
 	$('#logoutButton').hide();
 	$('#groupControl').hide();
+	$('#addSrepeatCancel').hide();
 	setTitle(year,month,startDay);
 	initCal(year,month,startDay);
 	UpdateUser();
@@ -83,6 +84,7 @@ function setEvent(){	//set NEW TASK event
 	setGroupFind();
 	setGroupAdd();
 	setTaskAdd();
+	setRepeat();
 	setLogout();
 
 	// Temporal

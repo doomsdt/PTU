@@ -187,12 +187,14 @@ window.fbAsyncInit = function() {
 					<div class='form-group'>
 					<input type = 'textarea' class = form-control id = addScont rows='2' placeholder='일정을 입력하세요...'>
 					</div>
-					<input type = 'button' id = addSsubmit class='btn btn-primary' value='새 일정'>
-					<input type = 'button' id = addSrepeat class='btn btn-primary' data-toggle='modal' data-target='#repeatMenu' value='반복하기'>		
+					<input type = 'button' id = addSsubmit class='btn btn-primary fr' value='새 일정'>
+					<input type = 'button' id = addSrepeat class='btn btn-primary fr' data-toggle='modal' data-target='#repeatMenu' value='반복하기'>
+					<input type = 'button' id = addSrepeatCancel class='btn btn-warning fr' value='반복취소'>	
+					<input type = 'hidden' id = repeatValue value=0>
 				</form>
 				
 				<div class="modal fade" id="repeatMenu" role="dialog">
-				    <div class="modal-dialog">
+				    <div class="modal-dialog modal-sm">
 				    
 				      <!-- Modal content-->
 				      <div class="modal-content">
@@ -202,8 +204,8 @@ window.fbAsyncInit = function() {
 				        </div>
 				        <div class="modal-body">
 					        <ul class="nav nav-pills nav-justified">
-								<li class="active"><a data-toggle="pill" href="#repeatDay">일</a></li>
-								<li><a data-toggle="pill" href="#repeatWeek">주</a></li>
+								<li class="active" id="repeatIsDay"><a data-toggle="pill" href="#repeatDay">일</a></li>
+								<li id="repeatIsWeek"><a data-toggle="pill" href="#repeatWeek">주</a></li>
 							</ul>
 							
 							<div class="tab-content">
@@ -219,8 +221,8 @@ window.fbAsyncInit = function() {
 							종료일
 				        </div>
 				        <div class="modal-footer">
-				        	<button type="button" class="btn btn-default" data-dismiss="modal">확인</button>
-				        	<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+				        	<button type="button" id="repeatSubmit" class="btn btn-default" data-dismiss="modal">확인</button>
+				        	<button type="button" id="repeatCancel" class="btn btn-default" data-dismiss="modal">취소</button>
 				        </div>
 				      </div>
 				      

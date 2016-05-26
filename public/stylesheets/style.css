@@ -183,11 +183,7 @@ header{
 	
 }
 
-#addSsubmit{
-	float:right;
-}
-
-#addSrepeat{
+.fr{
 	float:right;
 }
 

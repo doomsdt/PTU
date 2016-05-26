@@ -23,7 +23,8 @@ exports.create = function(req, res) {
 				date: req.body.date,
 				startTime:req.body.startTime,
 				endTime: req.body.endTime,
-				contents: req.body.contents
+				contents: req.body.contents,
+				repEndDate: req.body.tmp
 			}).save();			
 		});
 	}

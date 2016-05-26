@@ -7,7 +7,9 @@ var taskSchema = new Schema({
 	date: String,
 	startTime: String,
 	endTime: String,
-	contents: String
+	contents: String,
+	repeat: Number,
+	repEndDate: String
 });
 
 module.exports = mongoose.model('Task', taskSchema);
