@@ -3,11 +3,12 @@ function setTaskAdd(){
 	$('#addSsubmit').on('click', function(){
 		var paramId;
 		
+		var dt = $('#addSdate').val();
 		var st = get_number_str($('#addSstH').val()) + "" + get_number_str($('#addSstM').val());
 		var ed = get_number_str($('#addSedH').val()) + "" + get_number_str($('#addSedM').val());
 		var cont = $('#addScont').val();
-		var d = new Date();
-		var formData = "date=" + $('#addSdate').val() + "&startTime=" + st + "&endTime=" + ed + "&contents=" + cont + "&tmp=" + d;
+		
+		var formData = "date=" + dt + "&startTime=" + st + "&endTime=" + ed + "&contents=" + cont;
 
 		if($('#topTitle').attr('value')==0)	{	
 			paramId = $('#userId').val();
@@ -19,10 +20,11 @@ function setTaskAdd(){
 			formData += "&group=" + paramId;
 		}
 		
-		
-		
-		if($('#repeatValue').val()!=0)
-			formData += "&repeatValue=" + $('#repeatValue').val();
+		if($('#repeatValue').val()!=0){
+			var edv = $('#repeatEday').val();
+			var edt = edv.slice(0,4)+edv.slice(5,7)+edv.slice(8,10)
+			formData += "&repeatValue=" + $('#repeatValue').val() + "&repeatEday=" + edt;
+		}
 		
 		$.ajax({
 			type: "POST",
@@ -34,69 +36,88 @@ function setTaskAdd(){
 			}
 		});
 		$('.schdTimes').val(''); $('#addScont').val('');
+		$('#addSrepeat').show();
+		$('#addSrepeatCancel').hide();
 	});
 }
 
 function setTaskDel(id){	//change to individual
 	$('.taskDel').unbind('click');
 	$('.taskDel').on('click', function(){
-		ajaxData = "contents=" + $(this).parent().find('.taskCon').text() + "&date=" + $(this).parent().attr('id').slice(0,8) + "&startTime=" + $(this).parent().attr('id').slice(8,12);
-
-		if($('#topTitle').attr('value')==0){
-			ajaxData += "&user=" + id;
-		}
-		else{
-			ajaxData += "&group=" + id;
-		}
-		$.ajax({
-			type: "POST",
-			url: "/removeTask",
-			data: ajaxData
-			
-			,success: function(){
-				$(this).parent().remove();
-					UpdateDate(id);
+		if($(this).siblings('.taskRv').val()==0){
+			ajaxData = "contents=" + $(this).parent().find('.taskCon').text() + "&date=" + $(this).parent().attr('id').slice(0,8) + "&startTime=" + $(this).parent().attr('id').slice(8,12);
+	
+			if($('#topTitle').attr('value')==0){
+				ajaxData += "&user=" + id;
 			}
-		});
+			else{
+				ajaxData += "&group=" + id;
+			}
+			$.ajax({
+				type: "POST",
+				url: "/removeTask",
+				data: ajaxData
+				
+				,success: function(){
+					$(this).parent().remove();
+						UpdateDate(id);
+				}
+			});
+		}
 		
+		else{
+			$('#deleteModal').modal();
+		}
 	});
 }
 
+function setTaskDelRepeat(){
+	
+}
+
 function setRepeat(){
-	var ret = 0;
+	var ret;
+	var dwFlag=0;
 	$('#addSrepeat').unbind('click');
-	$('#addSrepeat').on('click',function(){
+	$('#addSrepeat').on('click',function(){			//반복하기 버튼
+		ret = 0;
 		$('#repeatIsDay').unbind('click');
 		$('#repeatIsDay').on('click', function(){
-			ret=0;
-			$('#repeatDayNum').val(0);
+			dwFlag = 0;
+			$('#repeatDayNum').val('');
 			});
 		
 		$('#repeatIsWeek').unbind('click');
 		$('#repeatIsWeek').on('click', function(){
-			ret=10;
-			$('#repeatWeekNum').val(0);
+			dwFlag = 1;
+			$('#repeatWeekNum').val('');
 			});
+		
 	});
 	
 	$('#repeatSubmit').unbind('click');
-	$('#repeatSubmit').on('click',function(){
-		if(ret==0)
+	$('#repeatSubmit').on('click',function(){		//확인 버튼
+		if(dwFlag==0)
 			ret+=Number($('#repeatDayNum').val());
 		else
-			ret+=Number($('#repeatWeekNum').val());
+			ret+=(Number($('#repeatWeekNum').val())*7);
 		$('#repeatValue').val(ret);
+		$('#repeatEday').val($('#datepicker').val());
+		$('#repeatDayNum').val('');
+		$('#repeatWeekNum').val('');
 		$('#addSrepeat').hide();
 		$('#addSrepeatCancel').show();
 	});
 	
 	$('#repeatCancel').unbind('click');
-	$('#repeatCancel').on('click', function(){
+	$('#repeatCancel').on('click', function(){		//취소 버튼
 		$('#repeatValue').val(0);
+		$('#repeatDayNum').val('');
+		$('#repeatWeekNum').val('');
 	});
 	
 	$('#addSrepeatCancel').unbind('click');
-	$('#addSrepeatCancel').on('click', function(){
+	$('#addSrepeatCancel').on('click', function(){	//반복 취소 버튼
 		$('#repeatValue').val(0);
 		$('#addSrepeat').show();
 		$('#addSrepeatCancel').hide();

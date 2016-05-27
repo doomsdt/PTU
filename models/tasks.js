@@ -9,6 +9,7 @@ var taskSchema = new Schema({
 	endTime: String,
 	contents: String,
 	repeat: Number,
+	repStartDate: String,
 	repEndDate: String
 });
 

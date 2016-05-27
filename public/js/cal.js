@@ -1,9 +1,6 @@
 var groupFlag = false;
 
 function initCal(y,m,start_day){	//draw week calendar
-	var today = new Date().getDay();
-	var end_day = new Date();
-	end_day.setDate(start_day.getDate() + (6-today));		//end datetime of this week
 
 	$('#calTime').empty();
 
@@ -14,7 +11,7 @@ function initCal(y,m,start_day){	//draw week calendar
 	for(var i=0;i<7;i++){
 		
 		$('#day'+i).find('.yoilDate').text((dt.getMonth()+1) + '.' + dt.getDate() + ' ');
-		$('#addS'+i).val(y + "" + get_number_str(m) + "" + get_number_str(start_day.getDate()));
+		$('#addS'+i).val(dt.getFullYear() + "" + get_number_str(dt.getMonth()+1) + "" + get_number_str(dt.getDate()));
 		dt.setDate(dt.getDate()+1);
 	}
 	dt.setDate(dt.getDate()-7);
@@ -56,6 +53,10 @@ function initCalendar(year,month,startDay){
 	$('#logoutButton').hide();
 	$('#groupControl').hide();
 	$('#addSrepeatCancel').hide();
+	$(function(){
+		$('#datepicker').datepicker();
+		$('#datepicker').datepicker('option','dateFormat', 'yy-mm-dd');
+	});
 	setTitle(year,month,startDay);
 	initCal(year,month,startDay);
 	UpdateUser();
@@ -159,7 +160,11 @@ function UpdateDate(paramId){		//get TASK LIST and show
 									var date = new Date(curTask.date.slice(0,4) + '-' + curTask.date.slice(4,6) + '-' + curTask.date.slice(6,8));
 									if(curTask.date>=$('#addS0').val() && curTask.date<=$('#addS6').val()){
 										var t = $("<div class='task box_center' id=" + curTask.date +'' + curTask.startTime + 
-												"><span class='taskCon'></span></div>");
+												"><span class='taskCon'></span>"+ 
+												"<input type='hidden' class='taskRst' value="+ curTask.repStartDate + ">" +
+												"<input type='hidden' class='taskRed' value="+ curTask.repEndDate + ">" +
+												"<input type='hidden' class='taskRv' value="+ curTask.repeat + ">" +
+												+"</div>");
 										
 										if(curTask.group==paramId){
 											$(t).append("<a href='#' class='close taskDel' aria-label='close'>&times;</a>");
@@ -208,7 +213,11 @@ function UpdateDate(paramId){		//get TASK LIST and show
 							var date = new Date(_tmp[key].date.slice(0,4) + '-' + _tmp[key].date.slice(4,6) + '-' + _tmp[key].date.slice(6,8));
 							if(_tmp[key].date>=$('#addS0').val() && _tmp[key].date<=$('#addS6').val()){
 								var t = $("<div class='task box_center' id=" + _tmp[key].date +'' + _tmp[key].startTime + 
-										"><a href='#' class='close taskDel' aria-label='close'>&times;</a><span class='taskCon'>" + _tmp[key].contents + '</span></div>');
+										"><a href='#' class='close taskDel' aria-label='close'>&times;</a><span class='taskCon'>" + _tmp[key].contents + '</span>'+ 
+										"<input type='hidden' class='taskRst' value="+ _tmp[key].repStartDate + ">" +
+										"<input type='hidden' class='taskRed' value="+ _tmp[key].repEndDate + ">" +
+										"<input type='hidden' class='taskRv' value="+ _tmp[key].repeat + ">" +
+										+'</div>');
 								
 								if(_tmp[key].group){
 									$(t).find('.taskDel').remove();

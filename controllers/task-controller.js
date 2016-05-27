@@ -1,5 +1,11 @@
 var Task = require('../models/tasks.js');
 
+function get_number_str(num){
+	if(num<10)
+		num = '0' + num;
+	return num;
+};
+
 exports.list = function(req, res) {
 	var tmp;
 	if(req.body.userId){
@@ -16,46 +22,56 @@ exports.list = function(req, res) {
 };
 
 exports.create = function(req, res) {
-	if(req.body.user){
-		Task.find(function(err, tasks) {
-			new Task({
-				user: req.body.user,
-				date: req.body.date,
+	
+	var t = new Task({
+		date: req.body.date,
+		startTime:req.body.startTime,
+		endTime: req.body.endTime,
+		contents: req.body.contents,
+		repeat: 0
+	});	
+	
+	if(req.body.user)
+		t.user = req.body.user;
+	
+	else
+		t.group = req.body.group;
+	
+	if(req.body.repeatValue){
+		var sd = req.body.date;
+		var tmp = req.body.date;
+		var ed = req.body.repeatEday;
+		var rv = Number(req.body.repeatValue);
+		var tdt = new Date(tmp.slice(0,4),Number(tmp.slice(4,6))-1,tmp.slice(6,8));
+		var edt = new Date(ed.slice(0,4),Number(ed.slice(4,6))-1,ed.slice(6,8));
+		
+		while(tdt<=edt){
+			
+			var tt = new Task({
 				startTime:req.body.startTime,
 				endTime: req.body.endTime,
 				contents: req.body.contents,
-				repEndDate: req.body.tmp
-			}).save();			
-		});
+				date: tdt.getFullYear()+""+get_number_str(tdt.getMonth()+1)+""+get_number_str(tdt.getDate()),
+				repeat: rv,
+				repStartDate: sd,
+				repEndDate: ed		
+			});
+			
+			if(req.body.user)
+				tt.user = req.body.user;
+			
+			else
+				tt.group = req.body.group;
+			
+			tt.save();
+			
+			tdt.setDate(tdt.getDate()+rv);
+		}
 	}
 	
-	else{
-		Task.find(function(err, tasks) {
-			new Task({
-				group: req.body.group,
-				date: req.body.date,
-				startTime:req.body.startTime,
-				endTime: req.body.endTime,
-				contents: req.body.contents
-			}).save();			
-		});
-	}
-	res.end();
-};
-
-exports.update = function(req, res) {
+	else
+		t.save();
 	
-	Task.update({
-		contents : req.body.contents
-	}, {
-		status : req.body.status
-	}, function(err, numberAffected, raw) {
-		if (err)
-			throw err;
-		console.log('The number of updated documents was %d', numberAffected);
-		console.log('The raw response from MongoDB was ', raw);
-	});
-	res.redirect('/');
 	res.end();
 };
 
@@ -72,7 +88,6 @@ exports.remove = function(req,res,next) {
 		});
 		res.end();
 	} else if(req.body.groupId){
-		console.log('task');
 		Task.remove({
 			group : req.body.groupId
 		}, 
