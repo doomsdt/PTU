@@ -1,4 +1,5 @@
 var Task = require('../models/tasks.js');
+var Repeat = require('../models/repeatId.js');
 
 function get_number_str(num){
 	if(num<10)
@@ -38,35 +39,46 @@ exports.create = function(req, res) {
 		t.group = req.body.group;
 	
 	if(req.body.repeatValue){
-		var sd = req.body.date;
-		var tmp = req.body.date;
-		var ed = req.body.repeatEday;
-		var rv = Number(req.body.repeatValue);
-		var tdt = new Date(tmp.slice(0,4),Number(tmp.slice(4,6))-1,tmp.slice(6,8));
-		var edt = new Date(ed.slice(0,4),Number(ed.slice(4,6))-1,ed.slice(6,8));
 		
-		while(tdt<=edt){
+		var repId;
+		
+		new Repeat({
 			
-			var tt = new Task({
-				startTime:req.body.startTime,
-				endTime: req.body.endTime,
-				contents: req.body.contents,
-				date: tdt.getFullYear()+""+get_number_str(tdt.getMonth()+1)+""+get_number_str(tdt.getDate()),
-				repeat: rv,
-				repStartDate: sd,
-				repEndDate: ed		
-			});
+		}).save(function(err,newDoc){
+			console.log(newDoc);
+			repId = newDoc._id;
 			
-			if(req.body.user)
-				tt.user = req.body.user;
+			var sd = req.body.date;
+			var tmp = req.body.date;
+			var ed = req.body.repeatEday;
+			var rv = Number(req.body.repeatValue);
+			var tdt = new Date(tmp.slice(0,4),Number(tmp.slice(4,6))-1,tmp.slice(6,8));
+			var edt = new Date(ed.slice(0,4),Number(ed.slice(4,6))-1,ed.slice(6,8));
 			
-			else
-				tt.group = req.body.group;
-			
-			tt.save();
-			
-			tdt.setDate(tdt.getDate()+rv);
-		}
+			while(tdt<=edt){
+				var tt = new Task({
+					startTime:req.body.startTime,
+					endTime: req.body.endTime,
+					contents: req.body.contents,
+					date: tdt.getFullYear()+""+get_number_str(tdt.getMonth()+1)+""+get_number_str(tdt.getDate()),
+					rId: repId,
+					repeat: rv,
+					repStartDate: sd,
+					repEndDate: ed		
+				});
+				
+				if(req.body.user)
+					tt.user = req.body.user;
+				
+				else
+					tt.group = req.body.group;
+				
+				tt.save();
+				
+				tdt.setDate(tdt.getDate()+rv);
+			}
+		});
+		
 	}
 	
 	else
@@ -76,7 +88,18 @@ exports.create = function(req, res) {
 };
 
 exports.remove = function(req,res,next) {
-	if(req.body.user){
+	if(req.body.repeatValue){
+		
+		Task.remove({
+			rId : req.body.repId
+		}, function(err){
+			if(err)
+				throw err;
+		});
+		
+		res.end();
+	} else if(req.body.user){					//remove user task
+
 		Task.remove({
 			user : req.body.user,
 			contents : req.body.contents,
@@ -87,7 +110,7 @@ exports.remove = function(req,res,next) {
 				throw err;
 		});
 		res.end();
-	} else if(req.body.groupId){
+	} else if(req.body.groupId){		//group delete cascade
 		Task.remove({
 			group : req.body.groupId
 		}, 
@@ -96,9 +119,7 @@ exports.remove = function(req,res,next) {
 				console.log(err);
 		});
 		next();
-	}
-	
-	else{
+	} else{								//remove group task
 		Task.remove({
 			group : req.body.group,
 			contents : req.body.contents,

@@ -164,6 +164,7 @@ function UpdateDate(paramId){		//get TASK LIST and show
 												"<input type='hidden' class='taskRst' value="+ curTask.repStartDate + ">" +
 												"<input type='hidden' class='taskRed' value="+ curTask.repEndDate + ">" +
 												"<input type='hidden' class='taskRv' value="+ curTask.repeat + ">" +
+												"<input type='hidden' class='taskRId' value="+ curTask.rId + ">" +
 												+"</div>");
 										
 										if(curTask.group==paramId){
@@ -189,7 +190,7 @@ function UpdateDate(paramId){		//get TASK LIST and show
 			}
 		});
 	}
-	else{
+	else{		//중복 로직
 		$.ajax({
 			type: "POST",
 			url: '/listMember',
@@ -217,6 +218,7 @@ function UpdateDate(paramId){		//get TASK LIST and show
 										"<input type='hidden' class='taskRst' value="+ _tmp[key].repStartDate + ">" +
 										"<input type='hidden' class='taskRed' value="+ _tmp[key].repEndDate + ">" +
 										"<input type='hidden' class='taskRv' value="+ _tmp[key].repeat + ">" +
+										"<input type='hidden' class='taskRId' value="+ _tmp[key].rId + ">" +
 										+'</div>');
 								
 								if(_tmp[key].group){

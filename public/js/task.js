@@ -38,6 +38,7 @@ function setTaskAdd(){
 		$('.schdTimes').val(''); $('#addScont').val('');
 		$('#addSrepeat').show();
 		$('#addSrepeatCancel').hide();
+		$('#repeatValue').val(0);
 	});
 }
 
@@ -45,34 +46,49 @@ function setTaskDel(id){	//change to individual
 	$('.taskDel').unbind('click');
 	$('.taskDel').on('click', function(){
 		if($(this).siblings('.taskRv').val()==0){
-			ajaxData = "contents=" + $(this).parent().find('.taskCon').text() + "&date=" + $(this).parent().attr('id').slice(0,8) + "&startTime=" + $(this).parent().attr('id').slice(8,12);
-	
-			if($('#topTitle').attr('value')==0){
-				ajaxData += "&user=" + id;
-			}
-			else{
-				ajaxData += "&group=" + id;
-			}
-			$.ajax({
-				type: "POST",
-				url: "/removeTask",
-				data: ajaxData
-				
-				,success: function(){
-					$(this).parent().remove();
-						UpdateDate(id);
-				}
-			});
+			taskDel($(this).parent().attr('id'),id,"");
 		}
 		
 		else{
 			$('#deleteModal').modal();
+			setTaskDelRepeat($(this).parent().attr('id'),id);
 		}
 	});
 }
 
-function setTaskDelRepeat(){
+function setTaskDelRepeat(DOMId, OwnerId){
+	$('#deleteAll').unbind('click');
+	$('#deleteAll').on('click', function(){
+		var repeatV = "&repId=" + $('#'+DOMId).find('.taskRId').val() + "&repeatSday=" + $('#'+DOMId).find('.taskRst').val() + 
+		"&repeatEday=" + $('#'+DOMId).find('.taskRst').val() + "&repeatValue=" + $('#'+DOMId).find('.taskRv').val();
+		taskDel(DOMId, OwnerId, repeatV);
+	});
 	
+	$('#deleteOne').unbind('click');
+	$('#deleteOne').on('click', function(){
+		taskDel(DOMId, OwnerId, "");
+	});
+}
+
+function taskDel(DOMId, OwnerId, repeatV){
+	var ajaxData = "contents=" + $('#'+DOMId).find('.taskCon').text() + "&date=" + DOMId.slice(0,8) + "&startTime=" + DOMId.slice(8,12) + repeatV;
+	
+	if($('#topTitle').attr('value')==0){
+		ajaxData += "&user=" + OwnerId;
+	}
+	else{
+		ajaxData += "&group=" + OwnerId;
+	}
+	$.ajax({
+		type: "POST",
+		url: "/removeTask",
+		data: ajaxData
+		
+		,complete: function(){
+			$('#'+DOMId).remove();		//Is it necessary?
+				UpdateDate(OwnerId);
+		}
+	});
 }
 
 function setRepeat(){

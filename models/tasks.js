@@ -8,6 +8,7 @@ var taskSchema = new Schema({
 	startTime: String,
 	endTime: String,
 	contents: String,
+	rId: String,
 	repeat: Number,
 	repStartDate: String,
 	repEndDate: String

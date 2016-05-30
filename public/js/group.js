@@ -27,7 +27,7 @@ function initGroups(gName){		//get GROUP LIST and show
 					}
 				});
 				$('#groupList').append("<div class='glBox'><div class='btn btn-primary glElement' id="+ _tmp[key]._id +"><p class='glLeader'>"+leader
-						+"</p><p class='glName'>"+_tmp[key].name+"</p><p><a class='divLink'></a></p></div><input type='button' value='+' class='btn btn-sm glJoin'></div>");
+						+"</p><p class='glName'>"+_tmp[key].name+"</p><p><a class='divLink'></a></p></div></div>");
 
 			}
 			
