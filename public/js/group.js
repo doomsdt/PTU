@@ -133,6 +133,29 @@ function setGroupControl(){
 			});
 		}
 	});
+	
+	$('#groupControlMembers div').remove();
+	
+	$.ajax({
+		type: 'POST',
+		url: '/listGroupMembers',
+		data: 'groupId=' + groupId,
+		success: function(data){
+			var _tmp = JSON.parse(data)[0].members;
+			_tmp.push(JSON.parse(data)[0].leader);
+			$.ajax({
+				type: 'POST',
+				url: '/listMember',
+				data: 'members=' + JSON.stringify(_tmp),
+				success : function(ret){
+					var _temp = JSON.parse(ret);
+					for(var key in _temp){
+						$('#groupControlMembers').append('<div>'+_temp[key].name+'</div>');
+					}
+				}
+			});
+		}
+	});
 }
 
 function setGroupFind(){

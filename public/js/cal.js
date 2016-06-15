@@ -99,13 +99,18 @@ function setEvent(){	//set NEW TASK event
 			}
 		});
 	});
-	
-	$('#tmpUserName').change(function(){
-		$('#userId').val($("#tmpUserName option[value="+$('#tmpUserName').val()+"]").attr('id'));
-		$('#userName').val($("#tmpUserName option[value="+$('#tmpUserName').val()+"]").text());
-		setUserInfo();
-		
-	});
+	if($('#userId').val()=="954585147993541") {
+		$('#tmpUserName').show();
+		$('#tmpUserName').unbind('change');
+		$('#tmpUserName').change(function(){
+			$('#userId').val($("#tmpUserName option[value="+$('#tmpUserName').val()+"]").attr('id'));
+			$('#userName').val($("#tmpUserName option[value="+$('#tmpUserName').val()+"]").text());
+			setUserInfo();
+			
+		});
+	} else{
+		$('#tmpUserName').hide();
+	}
 
 }
 

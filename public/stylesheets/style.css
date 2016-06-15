@@ -183,6 +183,10 @@ header{
 	
 }
 
+.fl{
+	float:left;
+}
+
 .fr{
 	float:right;
 }
@@ -244,6 +248,23 @@ a.divLink{
 	transform: translateY(-50%);
 	display:block;
 	z-index: 11;
+}
+
+#groupControlMenu{
+	padding-right:20px;
+	width:100%;
+	margin-top:20px;
+	float:left;
+	clear:right;
+}
+
+#groupControlName{
+	float:left;
+	font-size:20px;
+}
+
+.grConBt{
+	float:right;
 }
 
 .red{

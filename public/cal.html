@@ -270,10 +270,15 @@ window.fbAsyncInit = function() {
 			<div id = 'groupList'>
 			</div>	
 			<div id = 'groupControl'>
-				<p id = 'groupControlName'></p>
-				<input id='groupJoin' type='button' class='btn btn-danger' value='Join!'></input>
-				<input id='groupQuit' type='button' class='btn btn-danger' value='Quit!'></input>
-				<input id='groupDel' type='button' class='btn btn-danger' value='Delete!'></input>
+				<div id = 'groupControlMenu'>
+					<p id = 'groupControlName'></p>
+					<input id='groupJoin' type='button' class='btn btn-danger grConBt' value='그룹 가입'></input>
+					<input id='groupQuit' type='button' class='btn btn-danger grConBt' value='그룹 나가기'></input>
+					<input id='groupDel' type='button' class='btn btn-danger grConBt' value='그룹 삭제'></input>
+				</div>
+				
+				<br/>
+				<div id = 'groupControlMembers'></div>
 			</div>
 		</div>
 	</div>

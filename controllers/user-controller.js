@@ -8,6 +8,14 @@ exports.list = function(req,res){
 			res.send(tmp);
 		});
 	}
+	else if(req.body.members){
+		Member.find({uid : {$in : JSON.parse(req.body.members)}},'name',function(err,members){
+			tmp = JSON.stringify(members);
+			res.send(tmp);
+			console.log(tmp);
+			res.end();
+		});
+	}
 	else{
 		Member.find().exec(function(err,members){
 			tmp = JSON.stringify(members);
