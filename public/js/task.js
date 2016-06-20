@@ -2,39 +2,48 @@ function setTaskAdd(){
 	$('#addSsubmit').unbind('click');
 	$('#addSsubmit').on('click', function(){
 		var paramId;
+		var flag = true;
 		
 		var dt = $('#addSdate').val();
 		var st = get_number_str($('#addSstH').val()) + "" + get_number_str($('#addSstM').val());
 		var ed = get_number_str($('#addSedH').val()) + "" + get_number_str($('#addSedM').val());
 		var cont = $('#addScont').val();
 		
-		var formData = "date=" + dt + "&startTime=" + st + "&endTime=" + ed + "&contents=" + cont;
-
-		if($('#topTitle').attr('value')==0)	{	
-			paramId = $('#userId').val();
-			formData += "&user=" + paramId;
-		}
+		if(dt=="") {alertWarning("일정을 추가할 날짜를 선택하세요."); flag = false;}
+		else if(st>=ed) {alertWarning("종료 시간이 시작 시간보다 빠릅니다."); flag = false;}
+		else if(st<0900 || ed>2400) {alertWarning("09시부터 24시 사이에만 생성할 수 있습니다."); flag = false;}
+		else if(cont=="") {alertWarning("일정의 내용을 입력하세요."); flag = false;}
 		
-		else {		
-			paramId = $(".glName").filter(function(){ return $(this).text() == $('#topTitle').text() }).parent().attr('id');
-			formData += "&group=" + paramId;
-		}
+		if(flag){
 		
-		if($('#repeatValue').val()!=0){
-			var edv = $('#repeatEday').val();
-			var edt = edv.slice(0,4)+edv.slice(5,7)+edv.slice(8,10)
-			formData += "&repeatValue=" + $('#repeatValue').val() + "&repeatEday=" + edt;
-		}
-		
-		$.ajax({
-			type: "POST",
-			url: '/createTask',
-			data: formData,
-			async : false,
-			complete: function(){
-				UpdateDate(paramId);
+			var formData = "date=" + dt + "&startTime=" + st + "&endTime=" + ed + "&contents=" + cont;
+	
+			if($('#topTitle').attr('value')==0)	{	
+				paramId = $('#userId').val();
+				formData += "&user=" + paramId;
 			}
-		});
+			
+			else {		
+				paramId = $(".glName").filter(function(){ return $(this).text() == $('#topTitle').text() }).parent().attr('id');
+				formData += "&group=" + paramId;
+			}
+			
+			if($('#repeatValue').val()!=0){
+				var edv = $('#repeatEday').val();
+				var edt = edv.slice(0,4)+edv.slice(5,7)+edv.slice(8,10)
+				formData += "&repeatValue=" + $('#repeatValue').val() + "&repeatEday=" + edt;
+			}
+			
+			$.ajax({
+				type: "POST",
+				url: '/createTask',
+				data: formData,
+				async : false,
+				complete: function(){
+					UpdateDate(paramId);
+				}
+			});
+		}
 		$('.schdTimes').val(''); $('#addScont').val('');
 		$('#addSrepeat').show();
 		$('#addSrepeatCancel').hide();

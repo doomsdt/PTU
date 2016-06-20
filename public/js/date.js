@@ -1,6 +1,6 @@
 //make number to 2-word string  ex) 1 -> "01"
 function get_number_str(num){
-	if(num<10)
+	if((num<10&&num>0) || num=='0')
 		num = '0' + num;
 	return num;
 };

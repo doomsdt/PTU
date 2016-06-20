@@ -2,10 +2,11 @@ var Task = require('../models/tasks.js');
 var Repeat = require('../models/repeatId.js');
 
 function get_number_str(num){
-	if(num<10)
+	if((num<10&&num>0) || num=='0')
 		num = '0' + num;
 	return num;
 };
+
 
 exports.list = function(req, res) {
 	var tmp;

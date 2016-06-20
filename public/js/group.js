@@ -170,25 +170,26 @@ function setGroupFind(){
 function setGroupAdd(){		//set NEW GROUP and MEMBER event
 	$('#newGroupSubmit').unbind('click');
 	$('#newGroupSubmit').on('click',function(){
-
-		$.ajax({
-			type: 'POST',
-			url: '/createGroup',
-			data: "name=" + $('#newGroupName').val() + "&leaderId=" + $('#userId').val(),
-			complete: function(data){
-				alertSuccess("그룹을 생성하였습니다.");
-				var gId = data.responseText;
-				$.ajax({
-					type: 'POST',
-					url: '/updateMember',
-					data: 'memberId=' + $('#userId').val() + '&groupId=' + gId,
-					success : function(){
-						
-					}
-				});
-				
-			}
-		});
+		if($('#newGroupName').val() == "") alertWarning("그룹명을 입력하세요.");
+		else{
+			$.ajax({
+				type: 'POST',
+				url: '/createGroup',
+				data: "name=" + $('#newGroupName').val() + "&leaderId=" + $('#userId').val(),
+				complete: function(data){
+					alertSuccess("그룹을 생성하였습니다.");
+					var gId = data.responseText;
+					$.ajax({
+						type: 'POST',
+						url: '/updateMember',
+						data: 'memberId=' + $('#userId').val() + '&groupId=' + gId,
+						success : function(){							
+						}
+					});
+					
+				}
+			});
+		}
 	});
 
 }
