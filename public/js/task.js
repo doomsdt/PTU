@@ -10,8 +10,9 @@ function setTaskAdd(){
 		var cont = $('#addScont').val();
 		
 		if(dt=="") {alertWarning("일정을 추가할 날짜를 선택하세요."); flag = false;}
-		else if(st>=ed) {alertWarning("종료 시간이 시작 시간보다 빠릅니다."); flag = false;}
+		else if(st.length<4 || ed.length<4) {alertWarning("시간을 빠짐없이 입력하세요."); flag = false;}
 		else if(st<0900 || ed>2400) {alertWarning("09시부터 24시 사이에만 생성할 수 있습니다."); flag = false;}
+		else if(st>=ed) {alertWarning("종료 시간이 시작 시간보다 빠릅니다."); flag = false;}
 		else if(cont=="") {alertWarning("일정의 내용을 입력하세요."); flag = false;}
 		
 		if(flag){
@@ -91,10 +92,9 @@ function taskDel(DOMId, OwnerId, repeatV){
 	$.ajax({
 		type: "POST",
 		url: "/removeTask",
-		data: ajaxData
-		
-		,complete: function(){
-			$('#'+DOMId).remove();		//Is it necessary?
+		data: ajaxData,		
+		complete: function(){
+			//$('#'+DOMId).remove();		//Is it necessary?
 				UpdateDate(OwnerId);
 		}
 	});

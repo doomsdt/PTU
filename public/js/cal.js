@@ -99,8 +99,8 @@ function setEvent(){	//set NEW TASK event
 			}
 		});
 	});
-	if($('#userId').val()=="954585147993541") {
-		$('#tmpUserName').show();
+//	if($('#userId').val()=="954585147993541") {
+//		$('#tmpUserName').show();
 		$('#tmpUserName').unbind('change');
 		$('#tmpUserName').change(function(){
 			$('#userId').val($("#tmpUserName option[value="+$('#tmpUserName').val()+"]").attr('id'));
@@ -108,9 +108,9 @@ function setEvent(){	//set NEW TASK event
 			setUserInfo();
 			
 		});
-	} else{
-		$('#tmpUserName').hide();
-	}
+//	} else{
+//		$('#tmpUserName').hide();
+//	}
 
 }
 
@@ -179,7 +179,7 @@ function UpdateDate(paramId){		//get TASK LIST and show
 										}
 										
 										$('#calMain_day'+date.getDay()).append(t);
-										$(t).css("margin-top", st-bef+"px").css("height", ed-st-2+"px");
+										$(t).css("margin-top", st-bef+"px").css("height", ed-st+"px");
 																						
 										bef = ed;
 									}
@@ -232,7 +232,7 @@ function UpdateDate(paramId){		//get TASK LIST and show
 								}
 								
 								$('#calMain_day'+date.getDay()).append(t);
-								$(t).css("margin-top", st-bef+"px").css("height", ed-st-2+"px");
+								$(t).css("margin-top", st-bef+"px").css("height", ed-st+"px");
 								bef = ed;
 							}
 							befDate = _tmp[key].date;

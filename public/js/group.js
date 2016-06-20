@@ -13,7 +13,7 @@ function initGroups(gName){		//get GROUP LIST and show
 			$('#groupList div').remove();
 			$('#groupList br').remove();
 			
-			$('#groupList').append("<div class='glBox'><div class='glElement btn btn-warning' id='glMine'><p class='glName'> 내 시간표 </p></div></div>");
+			//$('#groupList').append("<div class='glBox'><div class='glElement btn btn-warning' id='glMine'><p class='glName'> 내 시간표 </p></div></div>");
 			
 			for(var key in _tmp){
 				var leader;
@@ -38,8 +38,8 @@ function initGroups(gName){		//get GROUP LIST and show
 }
 
 function setGroupSelect(){
-	$('.glElement').not('#glMine').unbind('click');
-	$('.glElement').not('#glMine').on('click', function(err){
+	//$('.glElement').not('#glMine').unbind('click');
+	$('.glElement').on('click', function(err){
 		$('#groupName').val($(this).find('p.glName').text());
 		$('#groupId').val($(this).attr('id'));
 		
@@ -53,8 +53,9 @@ function setGroupSelect(){
 	
 	$('#glMine').unbind('click');
 	$('#glMine').on('click', function(err){
-		$('#topTitle').text($(this).find('p.glName').text());
+		$('#topTitle').text("내 시간표");
 		$('#topTitle').attr('value',0);
+		$('#groupControl').hide();
 		UpdateDate($('#userId').val());
 	});
 }

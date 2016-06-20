@@ -46,7 +46,6 @@ exports.create = function(req, res) {
 		new Repeat({
 			
 		}).save(function(err,newDoc){
-			console.log(newDoc);
 			repId = newDoc._id;
 			
 			var sd = req.body.date;

@@ -81,6 +81,7 @@ window.fbAsyncInit = function() {
  <div id="drawerExample" class="drawer dw-xs-8 dw-sm-4 dw-md-2 fold" aria-labelledby="drawerExample">
        <div class="drawer-controls">
            <a href="#drawerExample" data-toggle="drawer" aria-foldedopen="false" aria-controls="drawerExample" class="btn btn-primary btn-sm"><span class='glyphicon glyphicon-user'></span></a>
+           <a id="glMine" class="btn btn-primary btn-sm"><span class='glyphicon glyphicon-home'></span></a>
        </div>
        <div class="drawer-contents">
            <div id='userInfo' class="drawer-heading">
@@ -88,7 +89,7 @@ window.fbAsyncInit = function() {
             	   <fb:login-button scope="public_profile,email" onlogin="checkLoginState();"></fb:login-button>
                </div>
                <div id='logoutButton'>
-            	   <input type='button' class='btn btn-primary' value='Log out'></input>
+            	   <input type='button' class='fb_button fb_button_medium' value='Log out'></input>
                </div>
                <div id='userPicName'>
 	               <img id='userInfoPic' class='img-circle'></img>
@@ -255,18 +256,18 @@ window.fbAsyncInit = function() {
 				</div>
 				
 			</div>
-			<form class = 'form-inline'>
-				<div class='form-group'>
-					<input type = 'text' id = newGroupName class='form-control'>
-					<input type = 'button' id = newGroupSubmit class='btn btn-primary' value='그룹 추가'> </br>			
+			
+				<div class='form-group groupFS'>
+					<input type = 'text' id = newGroupName class='groupFST'>
+					<input type = 'button' id = newGroupSubmit class='btn btn-primary groupFSB fr' value='그룹 추가'> </br>			
 				</div>
-			</form>
-			<form class = 'form-inline'>
-				<div class='form-group'>
-					<input type = 'text' id = groupFindName class='form-control'>
-					<input type = 'button' id = groupFind class='btn btn-primary' value='그룹 검색'> </br>			
+			
+			
+				<div class='form-group groupFS'>
+					<input type = 'text' id = groupFindName class='groupFST'>
+					<input type = 'button' id = groupFind class='btn btn-primary groupFSB fr' value='그룹 검색'> </br>			
 				</div>
-			</form>
+			
 			<div id = 'groupList'>
 			</div>	
 			<div id = 'groupControl'>

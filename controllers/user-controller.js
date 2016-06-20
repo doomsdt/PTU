@@ -12,7 +12,7 @@ exports.list = function(req,res){
 		Member.find({uid : {$in : JSON.parse(req.body.members)}},'name',function(err,members){
 			tmp = JSON.stringify(members);
 			res.send(tmp);
-			console.log(tmp);
+		
 			res.end();
 		});
 	}
