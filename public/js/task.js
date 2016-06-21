@@ -9,7 +9,13 @@ function setTaskAdd(){
 		var ed = get_number_str($('#addSedH').val()) + "" + get_number_str($('#addSedM').val());
 		var cont = $('#addScont').val();
 		
-		if(dt=="") {alertWarning("일정을 추가할 날짜를 선택하세요."); flag = false;}
+		if(dt=="") {
+			alertWarning("일정을 추가할 날짜를 선택하세요."); flag = false;
+			$('.addSday').css("background-color","#F17F7F");
+			setTimeout(function() {
+		        $(".addSday").css("background-color","#FFF");
+		}, 2000);
+			}
 		else if(st.length<4 || ed.length<4) {alertWarning("시간을 빠짐없이 입력하세요."); flag = false;}
 		else if(st<0900 || ed>2400) {alertWarning("09시부터 24시 사이에만 생성할 수 있습니다."); flag = false;}
 		else if(st>=ed) {alertWarning("종료 시간이 시작 시간보다 빠릅니다."); flag = false;}
